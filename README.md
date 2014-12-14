@@ -12,5 +12,9 @@ Node, NPM, [RVM](https://rvm.io/rvm/install), [Heroku Toolbelt](https://toolbelt
 
 ## To run locally:
 ```sh
+$ node index
+```
+or with Heroku Toolbelt/Foreman:
+```sh
 $ foreman start web
 ```
