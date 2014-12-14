@@ -1,8 +1,7 @@
 "use strict";
 
 var _ = require('underscore');
-var http = require("http");
-var https = require("https");
+var Proxy = require('./Proxy');
 
 var API_KEY;
 
@@ -12,46 +11,17 @@ function Imgur (api_key) {
 
 _.extend(Imgur.prototype, {
 	
-	search : function (tag, ext, onResult) {
-		
-		var url = 'api.imgur.com'
-		var path = '/3/gallery/search/?q=' + tag + '+ext%3A' + ext;
-		
+	search : function (query, onResult) {
+		var proxy = new Proxy();
 		var options = {
-  			host: url,
-  			port: 443,
-  			path: path,
-  			method: 'GET',
+  			host: 'api.imgur.com',
+  			path: '/3/gallery/search/?q='+query,
     		headers: {
         		'Authorization'	: 'Client-ID ' + API_KEY,
-        		'Content-type' 	: 'application/json'
     		}
 		};
-		return this.getJSON(options, onResult);
-	},
-
-
-	getJSON : function (options, onResult) {
-
-		var prot;
-		var req;
-		var output = '';
-
-		prot = options.port == 443 ? https : http;
-
-    	req = prot.request(options, function(res) {
-  			//console.log('STATUS: ' + res.statusCode);
-  			//console.log('HEADERS: ' + JSON.stringify(res.headers));
-  			res.setEncoding('utf8');
-  			res.on('data', function (chunk) {
-    			output += chunk;
-  			});
-  			res.on('end', function(){
-  				onResult(res.statusCode, output);
-  			});
-		}).end();
+		return proxy.getJSON(options, onResult);
 	}
-
 });
 
 module.exports = Imgur;
