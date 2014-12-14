@@ -1,0 +1,32 @@
+{
+  "name": "247dunks",
+  "version": "1.0.0",
+  "description": "All dunks, all the time. You're welcome.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrisdevwords/247dunks.git"
+  },
+  "keywords": [
+    "dunks",
+    "dunk",
+    "basketball",
+    "gifs",
+    "gif",
+    "heroku",
+    "node"
+  ],
+  "author": "Chris Edwards",
+  "license": "Artistic-2.0",
+  "bugs": {
+    "url": "https://github.com/chrisdevwords/247dunks/issues"
+  },
+  "homepage": "https://github.com/chrisdevwords/247dunks",
+  "dependencies": {
+    "express": "^4.10.6"
+  }
+}
