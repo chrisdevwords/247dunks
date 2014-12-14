@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var Imgur = require('./app/service/Imgur');
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
@@ -15,13 +16,19 @@ app.get('/', function (request, response) {
 });
 
 app.get('/imgur', function (request, response) {
-	var IMGUR_KEY = process.env.IMGUR_KEY || request.query.imgur_key || '';
-	var result = 'Set up a service to search imgur.:'+IMGUR_KEY;
+	
+	var imgur = new Imgur(process.env.IMGUR_KEY || request.query.imgur_key || '');
+	var result = imgur.search('slam+dunk','gif', function (status, obj) {
+		console.log('response status:', status);
+		response.json(obj);
+	});
+
+	/*
+	var result = 'Set up a service to search imgur.';
 	result += '<br/>';
 	result += 'TODO implement <a href="http://stackoverflow.com/questions/9577611/http-get-request-in-node-js-express"' +
 				' target="_blank">This example</a>';
-
-	response.send(result);
+	*/
 });
 
 app.listen(app.get('port'), function () {
