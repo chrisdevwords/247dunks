@@ -15,8 +15,8 @@ app.get('/', function (request, response) {
 });
 
 app.get('/imgur', function (request, response) {
-	var IMGUR_KEY = process.env.IMGUR_KEY || request.query.key || '';
-	var result = 'Set up a service to search imgur.';
+	var IMGUR_KEY = process.env.IMGUR_KEY || request.query.imgur_key || '';
+	var result = 'Set up a service to search imgur.:'+IMGUR_KEY;
 	result += '<br/>';
 	result += 'TODO implement <a href="http://stackoverflow.com/questions/9577611/http-get-request-in-node-js-express"' +
 				' target="_blank">This example</a>';

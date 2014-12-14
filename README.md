@@ -18,3 +18,9 @@ or with Heroku Toolbelt/Foreman:
 ```sh
 $ foreman start web
 ```
+
+### .env file
+This repo is set up to ignore the .env file. To run this locally, create a file: .env in the root of the project and add the following line:
+```
+IMGUR_KEY=your_imgur_app_key
+```
