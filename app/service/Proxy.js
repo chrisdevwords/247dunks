@@ -17,7 +17,6 @@ _.extend(Proxy.prototype, {
 		
 		options = options || {};
 		options.headers = _.extend({
-			'Content-type' : 'application/json'
 		}, options.headers);
 		
 		options = _.extend({port: 443, method : 'GET'}, options);

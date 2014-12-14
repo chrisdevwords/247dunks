@@ -28,6 +28,7 @@
   "homepage": "https://github.com/chrisdevwords/247dunks",
   "dependencies": {
     "express": "^4.10.6",
-    "underscore": "^1.7.0"
+    "underscore": "^1.7.0",
+    "youtube-node": "^1.1.2"
   }
 }

@@ -1,11 +1,13 @@
 # 247dunks
 Hello world. With dunks.
 
+![DUNKS](http://i.imgur.com/vPUHncC.gif)
+
 A work in progress. [Check it out](https://twentyfoursevendunks.herokuapp.com/).
 
 Based on [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article.
 
-Searches [imgur](http://imgur.com) for sweet GIFs of slam dunks. 
+Searches [imgur](http://imgur.com) for sweet GIFs and Youtube for sweet Tubes... of dunks. 
 
 ## Requires
 Node, NPM, [RVM](https://rvm.io/rvm/install), [Heroku Toolbelt](https://toolbelt.heroku.com/) or [Foreman](https://github.com/ddollar/foreman)
@@ -23,4 +25,5 @@ $ foreman start web
 This repo is set up to ignore the .env file. To run this locally, create a file: .env in the root of the project and add the following line:
 ```
 IMGUR_KEY=your_imgur_app_key
+YOUTUBE_KEY=your_youtube_app_key
 ```
