@@ -1,7 +1,7 @@
 # 247dunks
 Hello world. With dunks.
 
-![DUNKS](http://i.imgur.com/vPUHncC.gif)
+![DUNKS](https://i.imgur.com/iCTugx8.gif)
 
 A work in progress. [Check it out](https://twentyfoursevendunks.herokuapp.com/).
 
