@@ -18,7 +18,7 @@ app.get('/', function (request, response) {
  * to be consumed by the front-end code
 **/
 app.get('/imgur', function (request, response) {
-	var q = escape(request.param('q').split(' ').join('+'));
+	var q = escape((request.param('q')|| '').split(' ').join('+'));
 	var imgur = new Imgur(process.env.IMGUR_KEY || request.param('imgur_key') || '');
 	imgur.search(q, function (status, data) {
 		console.log('response status:', status);
@@ -27,7 +27,7 @@ app.get('/imgur', function (request, response) {
 });
 
 app.get('/youtube', function (request, response){
-	var q = request.param('q');
+	var q = request.param('q') || '';
 	var count = Number(request.param('count'));
 	var youTube = new YouTube();
 	count = !isNaN(count) && (count > 0) ? count : 5;
