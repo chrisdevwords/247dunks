@@ -1,51 +1,68 @@
-var express = require('express');
-var app = express();
-var swig = require('swig');
-var Imgur = require('./app/service/Imgur');
-var YouTube = require('youtube-node');
+"use strict";
 
+var path    = require('path');
+var express = require('express');
+var swig    = require('swig');
+var logger  = require('morgan');
+var cookies = require('cookie-parser');
+var body    = require('body-parser');
+var favicon = require('serve-favicon');
+var routes  = require('./app/routes/index');
+var api     = require('./app/routes/api');
+
+var app = express();
+
+// set views to render with swig
 app.engine('swig', swig.renderFile);
 app.set('view engine', 'swig');
-app.set('views', __dirname + '/app/view/templates');
+app.set('views', path.join(__dirname, 'app', 'views'));
 
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname , 'public/favicon.ico'));
+
+app.use(logger('dev'));
+app.use(body.json());
+app.use(body.urlencoded({extended: false}));
+app.use(cookies());
+app.use(express.static(path.join(__dirname , 'public')));
 app.set('port', (process.env.PORT || 5000));
-app.use(express.static(__dirname + '/public'));
-app.get('/', function (request, response) {
-    var gifs;
-    var imgur = new Imgur(process.env.IMGUR_KEY || request.param('imgur_key') || '');
-    imgur.search('dunk+ext%3Agif', function (status, resp) {
-        console.log('response status:', status);
-        gifs = JSON.parse(resp).data;
-        response.render('index', {
-            title : 'DUNKS!',
-            gif : gifs[Math.floor(gifs.length*Math.random())]
+
+app.use('/', routes);
+app.use('/api', api);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
         });
     });
-});
+}
 
-/**
- * to be consumed by the front-end code
-**/
-app.get('/imgur', function (request, response) {
-    var q = escape((request.param('q')|| '').split(' ').join('+'));
-    var imgur = new Imgur(process.env.IMGUR_KEY || request.param('imgur_key') || '');
-    imgur.search(q, function (status, data) {
-        console.log('response status:', status);
-        response.send(data);
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
     });
 });
-
-app.get('/youtube', function (request, response){
-    var q = request.param('q') || '';
-    var count = Number(request.param('count'));
-    var youTube = new YouTube();
-    count = !isNaN(count) && (count > 0) ? count : 5;
-    youTube.setKey(process.env.YOUTUBE_KEY || request.param('youtube_key') || '');
-    youTube.search(q, count, function(resultData) {
-        response.send(resultData);
-    });
-})
 
 app.listen(app.get('port'), function () {
   console.log("Node app is running at localhost:" + app.get('port'));
 });
+
+module.exports = app;
