@@ -10,7 +10,7 @@ Based on [Getting Started with Node on Heroku](https://devcenter.heroku.com/arti
 Searches [imgur](http://imgur.com) for sweet GIFs and Youtube for sweet Tubes... of dunks. 
 
 ## Requires
-Node, NPM, [RVM](https://rvm.io/rvm/install), [Heroku Toolbelt](https://toolbelt.heroku.com/) or [Foreman](https://github.com/ddollar/foreman)
+Node, NPM, [RVM](https://rvm.io/rvm/install), [Heroku Toolbelt](https://toolbelt.heroku.com/) or [Foreman](https://github.com/ddollar/foreman), gulp, and bower
 
 ## To run locally:
 ```sh

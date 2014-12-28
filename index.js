@@ -26,7 +26,7 @@ app.use(logger('dev'));
 app.use(body.json());
 app.use(body.urlencoded({extended: false}));
 app.use(cookies());
-app.use(express.static(path.join(__dirname , 'public')));
+app.use('/public', express.static(path.join(__dirname , 'public')));
 app.use('/', routes);
 app.use('/api', api);
 
