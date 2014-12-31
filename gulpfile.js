@@ -14,7 +14,8 @@ var rimraf      = require('gulp-rimraf');
 
 // todo add jslint and browsersync/live reload for dev
 // todo move dependencies out of bower, using this: 
-// https://www.npmjs.com/package/browserify-shim
+// https://www.npmjs.com/package/browserify-shim\
+// todo figure out a way to run build on heroku so i can .gitignore dist
 // 
 var watchFiles = [
     'app/views/index.src.swig',
