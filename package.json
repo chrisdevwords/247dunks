@@ -27,6 +27,9 @@
     "url": "https://github.com/chrisdevwords/247dunks/issues"
   },
   "homepage": "https://github.com/chrisdevwords/247dunks",
+  "browserify": {
+    "transform": ["browserify-compile-templates"]
+  },
   "dependencies": {
     "body-parser": "^1.10.0",
     "cookie-parser": "^1.3.3",
@@ -42,6 +45,7 @@
     "bower": "^1.3.12",
     "browser-sync": "^1.8.1",
     "browserify": "^8.0.2",
+    "browserify-compile-templates": "^0.1.3",
     "gulp": "^3.8.10",
     "gulp-browserify": "^0.5.0",
     "gulp-minify": "0.0.5",

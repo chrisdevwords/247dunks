@@ -5,6 +5,7 @@ var $ = require('jquery');
 var AppView = require('./AppView');
 
 var appView;
+
 $(function(){
     appView = new AppView();
 }); 
@@ -12251,8 +12252,9 @@ return jQuery;
 var root = window || global;
 var $ = require('jquery');
 var Backbone = require('backbone');
-Backbone.$ = root.jQuery = root.$ = $;
+var templates = require('../templates/templates');
 
+Backbone.$ = root.jQuery = root.$ = $;
 
 module.exports = Backbone.View.extend({
   
@@ -12262,10 +12264,21 @@ module.exports = Backbone.View.extend({
   },
 
   render: function () {
-    $('body').prepend('<p>wooooooooooooooo</p>');
+    $('body').append(templates.testTemplate({ title: $('img').attr('alt') }));
   }
 
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"backbone":2,"jquery":3}]},{},[1]);
+},{"../templates/templates":6,"backbone":2,"jquery":3}],6:[function(require,module,exports){
+_ = require('underscore');
+module.exports = {
+    "testTemplate": function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+__p+='\n    <p>'+
+((__t=( obj.title ))==null?'':_.escape(__t))+
+'</p>\n';
+return __p;
+}
+};
+},{"underscore":4}]},{},[1]);

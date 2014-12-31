@@ -3,8 +3,9 @@
 var root = window || global;
 var $ = require('jquery');
 var Backbone = require('backbone');
-Backbone.$ = root.jQuery = root.$ = $;
+var templates = require('../templates/templates');
 
+Backbone.$ = root.jQuery = root.$ = $;
 
 module.exports = Backbone.View.extend({
   
@@ -14,7 +15,7 @@ module.exports = Backbone.View.extend({
   },
 
   render: function () {
-    $('body').prepend('<p>wooooooooooooooo</p>');
+    $('body').append(templates.testTemplate({ title: $('img').attr('alt') }));
   }
 
 });

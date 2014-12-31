@@ -7,15 +7,21 @@ var minifyCss   = require('gulp-minify-css');
 var rename      = require('gulp-rename');
 var sass        = require('gulp-sass');
 var browserify  = require('browserify');
+var templates   = require('browserify-compile-templates');
 var source      = require('vinyl-source-stream');
 //todo use del instead of rimraf
 var rimraf      = require('gulp-rimraf');
 
-// originally based on:
-//https://blog.engineyard.com/2014/frontend-dependencies-management-part-2
-
+// todo add jslint and browsersync/live reload for dev
 // todo move dependencies out of bower, using this: 
 // https://www.npmjs.com/package/browserify-shim
+// 
+var watchFiles = [
+    'app/views/index.src.swig',
+    'public/src/js/**/*.js',
+    'public/src/scss/**/*.scss',
+    'public/src/templates/**/*.html'
+];
 
 gulp.task('build:sass', function () {
     return gulp.src('./public/src/scss/main.scss')
@@ -24,7 +30,9 @@ gulp.task('build:sass', function () {
 });
 
 gulp.task('build:js', function () {
-    return browserify('./public/src/js/main.js')
+    return browserify('./public/src/js/main.js',{
+        extensions: ['.html']
+    })
         .bundle()
         .pipe(source('build.js'))
         .pipe(gulp.dest('./public/build/js'));
@@ -60,11 +68,6 @@ gulp.task('dev', ['clean'], function () {
 });
 
 gulp.task('watch', ['default'], function() {
-    var watchFiles = [
-        'app/views/index.src.swig',
-        'public/src/js/**/*.js',
-        'public/src/scss/**/*.scss'
-    ];
     gulp.watch(watchFiles, ['default']);
 });
 
