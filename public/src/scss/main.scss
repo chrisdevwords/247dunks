@@ -1,0 +1,13 @@
+$title-color: #12cc12;
+$text-color: #cc1299;
+$bg-color: #efefef;
+
+body {
+    color: $title-color;
+    background-color: $bg-color;
+    text-align: center;
+}
+
+p {
+    color: $text-color;
+}

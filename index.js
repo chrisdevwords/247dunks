@@ -17,16 +17,16 @@ app.engine('swig', swig.renderFile);
 app.set('view engine', 'swig');
 app.set('views', path.join(__dirname, 'app', 'views'));
 
+app.set('port', (process.env.PORT || 5000));
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname , 'public/favicon.ico'));
-
+//
 app.use(logger('dev'));
 app.use(body.json());
 app.use(body.urlencoded({extended: false}));
 app.use(cookies());
-app.use(express.static(path.join(__dirname , 'public')));
-app.set('port', (process.env.PORT || 5000));
-
+app.use('/public', express.static(path.join(__dirname , 'public')));
 app.use('/', routes);
 app.use('/api', api);
 
