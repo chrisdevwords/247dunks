@@ -1,12 +1,16 @@
 "use strict";
 
+var root = window || global;
 var $ = require('jquery');
-var AppView = require('./AppView');
+var Backbone = require('backbone');
 
-var appView;
+Backbone.$ = root.jQuery = root.$ = $;
+
+var AppView = require('./AppView');
+var app = module.exports = {};
 
 $(function(){
-    appView = new AppView();
+    app.view = new AppView();
 }); 
 
-module.exports = appView;
+module.exports = app;

@@ -1,11 +1,8 @@
 "use strict";
 
-var root = window || global;
 var $ = require('jquery');
 var Backbone = require('backbone');
 var templates = require('../templates/templates');
-
-Backbone.$ = root.jQuery = root.$ = $;
 
 module.exports = Backbone.View.extend({
   

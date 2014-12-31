@@ -1,17 +1,23 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (global){
 "use strict";
 
+var root = window || global;
 var $ = require('jquery');
-var AppView = require('./AppView');
+var Backbone = require('backbone');
 
-var appView;
+Backbone.$ = root.jQuery = root.$ = $;
+
+var AppView = require('./AppView');
+var app = module.exports = {};
 
 $(function(){
-    appView = new AppView();
+    app.view = new AppView();
 }); 
 
-module.exports = appView;
-},{"./AppView":5,"jquery":3}],2:[function(require,module,exports){
+module.exports = app;
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./AppView":5,"backbone":2,"jquery":3}],2:[function(require,module,exports){
 //     Backbone.js 1.1.2
 
 //     (c) 2010-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -12246,15 +12252,11 @@ return jQuery;
 }.call(this));
 
 },{}],5:[function(require,module,exports){
-(function (global){
 "use strict";
 
-var root = window || global;
 var $ = require('jquery');
 var Backbone = require('backbone');
 var templates = require('../templates/templates');
-
-Backbone.$ = root.jQuery = root.$ = $;
 
 module.exports = Backbone.View.extend({
   
@@ -12269,7 +12271,6 @@ module.exports = Backbone.View.extend({
 
 });
 
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"../templates/templates":6,"backbone":2,"jquery":3}],6:[function(require,module,exports){
 _ = require('underscore');
 module.exports = {

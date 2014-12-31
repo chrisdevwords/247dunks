@@ -67,8 +67,14 @@ gulp.task('dev', ['clean'], function () {
         .pipe(gulp.dest('app/views'));
 });
 
-gulp.task('watch', ['default'], function() {
-    gulp.watch(watchFiles, ['default']);
+gulp.task('watch:dev', ['dev', 'build:js', 'build:sass'], function(){
+    gulp.watch(watchFiles, ['build:js', 'build:sass']);
 });
 
-gulp.task('default', ['minify', 'fix-template']);
+gulp.task('watch:build', ['build'], function() {
+    gulp.watch(watchFiles, ['build']);
+});
+
+gulp.task('build', ['minify', 'fix-template']);
+
+gulp.task('default', ['watch:dev']);
