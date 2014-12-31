@@ -8,7 +8,7 @@
     <h1>{{title}}</h1>
     <img height="100%" src="{{gif.link}}" alt="{{gif.title}}"/>
 
-    <script src="/public/dist/js/vendor.js"></script>
+    <script src="/public/dist/js/bundle.js"></script>
 
 </body>
 </html>

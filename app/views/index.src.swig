@@ -13,13 +13,10 @@
     <h1>{{title}}</h1>
     <img height="100%" src="{{gif.link}}" alt="{{gif.title}}"/>
 
-    <!-- build:js /public/dist/js/vendor.js -->
-    <script type="text/javascript" src="/public/bower_components/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="/public/bower_components/underscore/underscore.js"></script>
-    <script type="text/javascript" src="/public/bower_components/backbone/backbone.js"></script>
-    <script type="text/javascript" src="/public/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script type="text/javascript" src="/public/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- build:js /public/dist/js/bundle.js -->
     <script type="text/javascript" src="/public/bower_components/popcornjs/popcorn.js"></script>
+    <script type="text/javascript" src="/public/build/js/build.js"></script>
+    <script type="text/javascript" src="/public/bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <!-- endbuild -->
 
 </body>
