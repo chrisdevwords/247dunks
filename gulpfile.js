@@ -15,7 +15,7 @@ var rimraf      = require('gulp-rimraf');
 // todo add jslint and browsersync/live reload for dev
 // todo move dependencies out of bower, using this: 
 // https://www.npmjs.com/package/browserify-shim\
-// todo figure out a way to run build on heroku so i can .gitignore dist
+// todo figure out a way to run build on heroku so i can .gitignore public/dist
 // 
 var watchFiles = [
     'app/views/index.src.swig',
@@ -31,7 +31,7 @@ gulp.task('build:sass', function () {
 });
 
 gulp.task('build:js', function () {
-    return browserify('./public/src/js/main.js',{
+    return browserify('./public/src/js/main.js', {
         extensions: ['.html']
     })
         .bundle()
@@ -69,7 +69,7 @@ gulp.task('dev', ['clean'], function () {
 });
 
 gulp.task('watch:dev', ['dev', 'build:js', 'build:sass'], function(){
-    gulp.watch(watchFiles, ['build:js', 'build:sass']);
+    gulp.watch(watchFiles, ['dev', 'build:js', 'build:sass']);
 });
 
 gulp.task('watch:build', ['build'], function() {

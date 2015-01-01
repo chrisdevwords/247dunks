@@ -1,3 +1,44 @@
-<script type="text/template" id="testTemplate">
-    <p><%- obj.title %></p>
+<script type="text/template" id="mainTemplate">
+    
+    <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            
+          </div>
+
+          <div class="inner jumbotron guts">
+            
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>All Dunks, All The Time &copy; 2015 <a href="http://github.com/chrisdevwords/247dunks">Chris Edwards</a>.</p>
+            </div>
+          </div>
+
+        </div>
+</script>
+
+<script type="text/template" id="contentTemplate">
+    <h1 class="cover-heading"><%- obj.header %></h1>
+    <img id="dunkGif" src="<%- obj.dunk.link %>" alt="<%- obj.dunk.title %>"/>
+    <p class="lead"><%- obj.dunk.title %></p>
+    <p class="lead">
+        <a href="#" class="btn btn-lg btn-default" id="newDunk">Another Dunk?</a>
+    </p>
+</script>
+
+<script type="text/template" id="navTemplate">
+    <div class="inner">
+        <h3 class="masthead-brand"><%- obj.header %></h3>
+        <nav>
+            <ul class="nav masthead-nav">
+                <li class="active"><a href="#">All Dunks</a></li>
+                <li><a href="#">Tubes</a></li>
+            <li><a href="#">Gifs</a></li>
+            </ul>
+        </nav>
+    </div>
 </script>

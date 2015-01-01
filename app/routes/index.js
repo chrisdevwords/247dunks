@@ -1,3 +1,5 @@
+"use strict";
+
 var express = require('express');
 var router  = express.Router();
 var Imgur = require('../lib/Imgur');
@@ -9,8 +11,9 @@ router.get('/', function(req, res){
     imgur.search('dunk+ext%3Agif', function (status, resp) {
         gifs = JSON.parse(resp).data;
         res.render('index', {
-            title : 'DUNKS!',
-            gif : gifs[Math.floor(gifs.length*Math.random())]
+            title : '247 Dunks!',
+            imgur : resp,
+            serverVars : true   
         });
     });
 });

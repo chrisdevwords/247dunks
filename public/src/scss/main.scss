@@ -11,3 +11,12 @@ body {
 p {
     color: $text-color;
 }
+
+a {
+    color: $title-color;
+}
+
+#dunkGif {
+    width: 100%;
+    cursor: pointer;
+}

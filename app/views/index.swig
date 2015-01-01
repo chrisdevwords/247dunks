@@ -5,9 +5,15 @@
     <script src="/public/dist/js/head.js"></script>
 </head>
 <body>
-    <h1>{{title}}</h1>
-    <img height="100%" src="{{gif.link}}" alt="{{gif.title}}"/>
-
+    <div class="site-wrapper" id="main">
+        
+    </div>
+    {% if serverVars %}
+    <script>
+        window.__SERVER_VARS__ = {};
+        window.__SERVER_VARS__.imgur = {%autoescape false%}{{imgur|json_encode}}{%endautoescape%};
+    </script>
+    {% endif %}
     <script src="/public/dist/js/bundle.js"></script>
 
 </body>

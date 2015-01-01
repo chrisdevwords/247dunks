@@ -11,9 +11,15 @@
     <!-- endbuild -->
 </head>
 <body>
-    <h1>{{title}}</h1>
-    <img height="100%" src="{{gif.link}}" alt="{{gif.title}}"/>
-
+    <div class="site-wrapper" id="main">
+        
+    </div>
+    {% if serverVars %}
+    <script>
+        window.__SERVER_VARS__ = {};
+        window.__SERVER_VARS__.imgur = {%autoescape false%}{{imgur|json_encode}}{%endautoescape%};
+    </script>
+    {% endif %}
     <!-- build:js /public/dist/js/bundle.js -->
     <script type="text/javascript" src="/public/bower_components/popcornjs/popcorn.js"></script>
     <script type="text/javascript" src="/public/build/js/build.js"></script>
