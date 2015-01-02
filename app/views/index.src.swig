@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Twenty-Four-Seven Dunks!</title>
+    <meta name="description" content="All dunks, all the time. You're welcome.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    
     <!-- build:css /public/dist/css/site.css -->
     <link href="/public/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="/public/bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">

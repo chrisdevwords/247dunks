@@ -4,10 +4,13 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 var templates = require('../templates/templates');
 var Collections = require('./Collections');
+var video = require('video.js');
+
 
 module.exports = Backbone.View.extend({
 
     el: '#main',
+    useVideo : true,
     
     events : {
         'click #newDunk' : 'newDunk',
@@ -31,7 +34,11 @@ module.exports = Backbone.View.extend({
         var templateVars = _.extend({}, this.model.toJSON());
         //todo this will go into swig once we have it all nailed down...
         this.$el.html(templates.mainTemplate(templateVars));
-        $(this.$el.find('.guts')).html(templates.contentTemplate(templateVars));
+        if (this.useVideo) {
+            $(this.$el.find('.guts')).html(templates.videoTemplate(templateVars));
+        } else {
+            $(this.$el.find('.guts')).html(templates.gifTemplate(templateVars));
+        }
     },
 
     newDunk : function () {
