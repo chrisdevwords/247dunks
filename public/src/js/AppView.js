@@ -4,45 +4,74 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 var templates = require('../templates/templates');
 var Collections = require('./Collections');
-var video = require('video.js');
-
 
 module.exports = Backbone.View.extend({
 
     el: '#main',
-    useVideo : true,
-    
+    useVideo : false,
+
     events : {
-        'click #newDunk' : 'newDunk',
-        'click #dunkGif' : 'newDunk'
+        'click #newDunk'   : 'newDunk',
+        'click #dunkGif'   : 'newDunk',
+        'click #dunkVideo' : 'newDunk'
     },
 
-    initialize: function (options){
-        console.log('wuuut');
+    initialize: function (options) {
         var self = this;
-        this.gifs = new Collections.ImgurDunks(options.imgur.data);
+        this.options = options;
+        this.useVideo = options.useVideo || false;
         this.model = new Backbone.Model({
             header : '247 Dunks!'
         });
         this.model.on('change:dunk', function (){
-            self.render();
+            self.renderDunk();
         })
+        this.render();
         this.newDunk();
     },
 
     render: function () {
         var templateVars = _.extend({}, this.model.toJSON());
-        //todo this will go into swig once we have it all nailed down...
-        this.$el.html(templates.mainTemplate(templateVars));
-        if (this.useVideo) {
-            $(this.$el.find('.guts')).html(templates.videoTemplate(templateVars));
-        } else {
-            $(this.$el.find('.guts')).html(templates.gifTemplate(templateVars));
-        }
+        var self = this;
+        this.$el.html(templates.mainTemplate(templateVars)); //todo this will go into swig 
+        return this.delegateEvents();
     },
 
+    renderDunk : function () {
+        var templateVars = _.extend({}, this.model.toJSON());
+        var template = this.useVideo ? templates.videoTemplate : templates.gifTemplate;
+        (this.$el.find('.guts')).html(template(templateVars));
+        if(this.useVideo) {
+            this.listenToVideo();
+        } else {
+            // put some sort of timeout for resetting the gif here?
+        }
+        return this.delegateEvents();
+    },
+
+    listenToVideo : function () {
+        var self = this;
+        var $video = this.$el.find('#dunkVideo');
+        $video.on('ended', function () {
+            self.newDunk();
+        });
+        $video.on('waiting', function () {
+            console.log('video waiting...');
+        });
+        $video.on('stalled', function () {
+            console.log('video stalled...');
+        });
+        $video.on('stalled', function () {
+            console.log('video error...');
+        });
+    },
+    
     newDunk : function () {
-        this.model.set({dunk:this.gifs.randomAwesomeDunk().toJSON()});
+        if (!this.imgur || !this.imgur.length) {
+            this.imgur = new Collections.ImgurDunks(this.options.imgur.data);
+            this.imgur.curate();
+        }
+        this.model.set({dunk:this.imgur.randomAwesomeDunk().toJSON()});
     }
 
 });

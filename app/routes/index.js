@@ -8,7 +8,7 @@ var Imgur = require('../lib/Imgur');
 router.get('/', function(req, res){
     var gifs;
     var imgur = new Imgur(process.env.IMGUR_KEY || req.param('imgur_key') || '');
-    imgur.search('dunk+ext%3Agif', function (status, resp) {
+    imgur.search('dunk+ext%3Agif', 'top', 0, function (status, resp) {
         gifs = JSON.parse(resp).data;
         res.render('index', {
             title : '247 Dunks!',

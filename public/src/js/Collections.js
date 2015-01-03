@@ -4,9 +4,22 @@ var Backbone = require('backbone');
 
 module.exports = {
     ImgurDunks : Backbone.Collection.extend({
-       randomAwesomeDunk : function () {
-            return this.at(Math.round(Math.random()*this.length));
-       }
+
+        curate : function () {
+            // trim here
+            this.filter(function(dunk){
+                var title = dunk.get('title');
+                if (title.toLowerCase().indexOf('frisbee') != -1 ){
+                    return false;
+                }
+                return true;
+            });
+        },
+
+        randomAwesomeDunk : function () {
+            var index = Math.floor(this.length * Math.random());
+            return this.remove(this.at(index));
+        }
     })
 };
 

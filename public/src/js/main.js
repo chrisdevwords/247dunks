@@ -15,6 +15,7 @@ $(function () {
     var imgurData = JSON.parse(SV.imgur || "{}");
 
     app.view = new AppView({
+        useVideo : $('html').hasClass('no-touch'),
         imgur :imgurData
     });
 

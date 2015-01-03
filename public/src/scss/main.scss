@@ -16,7 +16,8 @@ a {
     color: $title-color;
 }
 
-#dunkGif {
+#dunkGif, #dunkVideo {
     width: 100%;
+    max-width: 500px;
     cursor: pointer;
 }

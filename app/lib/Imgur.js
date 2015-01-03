@@ -11,11 +11,11 @@ function Imgur (api_key) {
 
 _.extend(Imgur.prototype, {
 	
-	search : function (query, onResult) {
+	search : function (query, sort, page, onResult) {
 		var proxy = new Proxy();
 		var options = {
   			host: 'api.imgur.com',
-  			path: '/3/gallery/search/?q='+query,
+  			path: '/3/gallery/search/' + sort + '/' + page + '/?q='+query,
     		headers: {
         		'Authorization'	: 'Client-ID ' + API_KEY,
     		}

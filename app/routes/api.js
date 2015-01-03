@@ -10,8 +10,11 @@ var Imgur   = require('../lib/Imgur');
  */
 router.get('/imgur', function(req, res) {
     var q = escape((req.param('q')|| '').split(' ').join('+'));
+    var page = req.param('page') || 0;
+    var sort = req.param('sort') || 'top';
     var imgur = new Imgur(process.env.IMGUR_KEY || req.param('imgur_key') || '');
-    imgur.search(q, function (status, data) {
+    console.log('searching imgur', q);
+    imgur.search(q, sort, page, function (status, data) {
         res.send(data);
     });
 });
