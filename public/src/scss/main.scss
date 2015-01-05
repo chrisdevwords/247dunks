@@ -1,23 +1,65 @@
-$title-color: #12cc12;
-$text-color: #cc1299;
-$bg-color: #efefef;
+$green: #12cc12;
+$lightGrey: #aaccef;
+$grey: #363636;
 
 body {
-    color: $title-color;
-    background-color: $bg-color;
-    text-align: center;
-}
+    color: $lightGrey;
+    background-color: $grey;
+}   
+
+
 
 p {
-    color: $text-color;
+    color: $lightGrey;
 }
 
 a {
-    color: $title-color;
+    color: $green;
+}
+
+.navbar {
+    background-color: $lightGrey;
+    margin-bottom: 0;
+    h1 {
+        color: $grey;
+        text-transform: uppercase;
+    }   
+
+    small {
+        color: $green;
+        text-transform: lowercase;
+    }
+}
+
+.content {
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    background-color: #000;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 #dunkGif, #dunkVideo {
-    width: 100%;
-    max-width: 500px;
     cursor: pointer;
+}
+
+#dunkGif {
+    margin-top: 80px;
+    margin-bottom: 10px;
+}
+
+#dunkVideo {
+    width: 100%;
+    background-image: url(http://i.imgur.com/CmK0jcX.gif);
+    background-size: cover;
+    margin-top: 60px;
+}
+
+.footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
 }

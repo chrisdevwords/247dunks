@@ -5,6 +5,8 @@ var Backbone = require('backbone');
 module.exports = {
     ImgurDunks : Backbone.Collection.extend({
 
+        
+        
         curate : function () {
             // trim here
             this.filter(function(dunk){
