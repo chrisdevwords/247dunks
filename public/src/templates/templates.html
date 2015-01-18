@@ -2,12 +2,12 @@
     
     <main class="site-wrapper" id="main">
           <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container-fluid">
+            <header class="container-fluid">
               <h1>24/7 Dunks<small>.tv</small></h1>
-            </div>
+            </header>
           </nav>         
 
-          <section class="container guts content" id="content">
+          <section class="container content" id="content">
             
           </section>
 
@@ -18,17 +18,15 @@
       </main>
 </script>
 
-<script type="text/template" id="gifTemplate">
-    <img id="dunkGif" src="<%- obj.dunk.link %>" alt="<%- obj.dunk.title %>"/>
+<script type="text/template" id="imgurGif">
+    <img id="dunkGif" src="<%- obj.link %>" alt="<%- obj.title %>" class="dunk-gif"/>
     <p class="lead">
-        <a href="#" class="btn btn-lg btn-default" id="newDunk">Another Dunk?</a>
+        <a href="#" class="btn btn-lg btn-default new-dunk-btn">Another Dunk?</a>
     </p>
 </script>
 
-<script type="text/template" id="videoTemplate">
-    <video id="dunkVideo" width="<%- obj.dunk.width %>" width="<%- obj.dunk.height %>" autoplay preload="auto">
-      <source src="<%- obj.dunk.gifv %>" type='video/gifv'>
-      <source src="<%- obj.dunk.mp4 %>" type='video/mp4'>
-      <source src="<%- obj.dunk.webm %>" type='video/webm'>
-    </video>
+<script type="text/template" id="imgurVideoSrc">
+    <source src="<%- obj.gifv %>" type='video/gifv'>
+    <source src="<%- obj.mp4 %>" type='video/mp4'>
+    <source src="<%- obj.webm %>" type='video/webm'>
 </script>
