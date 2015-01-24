@@ -5,6 +5,12 @@ var router  = express.Router();
 var YouTube = require('youtube-node');
 var Imgur   = require('../lib/Imgur');
 
+
+var searchImgur = function (q, page, sort, cb) {
+    var imgur = new Imgur(process.env.IMGUR_KEY || req.param('imgur_key') || '');
+    imgur.search(q, sort, page, cb);
+};
+
 /**
  * enpoints to be consumed by the front end (ie. Backbone.Model.fetch)
  */
@@ -12,9 +18,16 @@ router.get('/imgur', function(req, res) {
     var q = escape((req.param('q')|| '').split(' ').join('+'));
     var page = req.param('page') || 0;
     var sort = req.param('sort') || 'top';
-    var imgur = new Imgur(process.env.IMGUR_KEY || req.param('imgur_key') || '');
-    console.log('searching imgur', q);
-    imgur.search(q, sort, page, function (status, data) {
+    searchImgur(q, page, sort, function (status, data) {
+        res.send(data);
+    });
+});
+
+router.get('/imgur/dunks', function(req, res) {
+    var page = req.param('page') || 0;
+    var q = 'dunk+ext:gif&page=' + page;
+    var sort = req.param('sort') || 'top';
+    searchImgur(q, page, sort, function (status, data) {
         res.send(data);
     });
 });

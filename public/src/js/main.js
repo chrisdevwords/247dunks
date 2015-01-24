@@ -5,6 +5,7 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 
 Backbone.$ = root.jQuery = root.$ = $;
+Backbone.LocalStorage = require("backbone.localstorage");
 
 var AppView = require('./AppView');
 var app = module.exports = {};

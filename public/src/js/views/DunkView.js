@@ -1,7 +1,5 @@
 "use strict";
 
-"use strict";
-
 var _ = require('underscore');
 var Backbone = require('backbone');
 var DunkModel = require('./../models/DunkModel');

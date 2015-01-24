@@ -8,6 +8,7 @@ var ImgurVideoView = Backbone.View.extend({
     id : 'dunkVideo',
     tagName : 'video',
     template : templates.imgurVideoSrc,
+    logOutput : true,
 
     attributes : {
         autoplay : 'autoplay',
@@ -16,24 +17,37 @@ var ImgurVideoView = Backbone.View.extend({
 
     events : {
         'ended' : function () {
-            this.$el.trigger('dunkComplete');
+            if (this.logOutput) {
+                console.log('video ended...');
+            }
+            this.$el.trigger('dunkComplete', this.model.get('id'));
         },
         'waiting' : function () {
-            console.log('video waiting...');
+            if (this.logOutput) {
+                console.log('video waiting...');
+            }
         },
         'stalled' : function () {
-            console.log('video stalled...');
+            if (this.logOutput) {
+                console.log('video stalled...');
+            }
         },
         'loadedmetadata' : function () {
             //$(this).parent().css('padding-top', ( .5*($(window).innerHeight()- $(this).height())) + 'px');
             //console.log($(this).parent().attr('style'));
-            console.log('meta data...');
+            if (this.logOutput) {
+                console.log('meta data...');
+            }
         },
         'playing' : function () {
-            console.log('video playing...');
+            if (this.logOutput) {
+                console.log('video playing...');
+            }
         },
         'canplaythrough' : function () {
-            console.log('video can play through...');
+            if (this.logOutput) {
+                console.log('video can play through...');
+            }
         }
     },
 
