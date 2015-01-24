@@ -31,7 +31,7 @@ var DunkView = Backbone.View.extend({
                 this.currentView.remove();
             }
             this.currentView = mediumView;
-            this.$el.append(this.currentView.render().$el);
+            this.$el.find('.content-wrap').append(this.currentView.render().$el);
         }
         return this;
     },

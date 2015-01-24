@@ -7,10 +7,8 @@
     <meta name="description" content="All dunks, all the time. You're welcome.">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">    
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    
+    <link href='http://fonts.googleapis.com/css?family=Passion+One|Black+Ops+One' rel='stylesheet' type='text/css'>
     <!-- build:css /public/dist/css/site.css -->
-    <link href="/public/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="/public/bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
     <link href="/public/build/css/main.css" rel="stylesheet">
     <!-- endbuild -->
     <!-- build:js /public/dist/js/head.js -->
@@ -29,8 +27,6 @@
     {% endif %}
     <!-- build:js /public/dist/js/bundle.js -->
     <script type="text/javascript" src="/public/build/js/build.js"></script>
-    <script type="text/javascript" src="/public/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script type="text/javascript" src="/public/bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <!-- endbuild -->
 
 </body>

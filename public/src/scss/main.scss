@@ -1,42 +1,113 @@
-$green: #12cc12;
-$lightGrey: #aaccef;
-$grey: #363636;
+@import "normalize";
+@import "mixins";
+
+$orange: #cc6636;
+$purple: #aaccef;
+$grey: #363646;
+$black: #002;
+
+$break: 768px;
 
 body {
-    color: $lightGrey;
-    background-color: $grey;
+     /* global styles */
+    color: $purple;
+    background-color: $black;
+    font-size: 0;
+    /* mobile styles */
+
+    @media (min-width:$break) {
+        /* desktop styles */
+    }
 }   
 
 p {
-    color: $lightGrey;
+    font-size: 12px;
+    color: $purple;
 }
 
-a {
-    color: $green;
+a, a:link, a:hover, a:visited, a:active {
+    color: $orange;
+    text-decoration: none;
 }
 
-.navbar {
-    background-color: $lightGrey;
-    margin-bottom: 0;
-    h1 {
-        color: $grey;
-        text-transform: uppercase;
-    }   
+.main {
+    /* global styles */
 
-    small {
-        color: $green;
-        text-transform: lowercase;
+    /* mobile styles */
+    @media (min-width:$break) {
+        /* desktop styles */
     }
 }
 
-.content {
-    text-align: center;
-    height: 100%;
+
+.main-header {
+    /* global styles */
     width: 100%;
-    background-color: #000;
-    position: absolute;
+    background-color: $grey;
+    margin-bottom: 0;
+    z-index: 1;
+    position: fixed;
+    box-shadow: 0px 4px 4px #000;
+    /* mobile styles */
+    @media (min-width:$break) {
+        /* desktop styles */
+    }
+
+    h1 {
+        /* global styles */
+        font-size: 48px;
+        color: $orange;
+        text-transform: uppercase;
+        font-family: 'Passion One', cursive;
+        margin: 0;
+        padding: 6px 12px;
+        /* mobile styles */
+        text-shadow: 2px 2px $black;
+
+        @media (min-width:$break) {
+            /* desktop styles */
+        }
+        > em {
+            font-style: normal;
+            font-family: 'Black Ops One', cursive;
+
+        }
+        > small {
+            font-size: .7em;
+            color: $purple;
+            text-transform: lowercase;
+            text-shadow: none;
+        }
+    }
+}
+
+.top-nav {
+    /* global styles */
+
+    /* mobile styles */
+    @media (min-width:$break) {
+        /* desktop styles */
+    }
+}
+
+
+.content {
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
+    position: absolute;
+    display: table;
+    z-index: 0;
+
+}
+
+.content-wrap {
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+
+
 }
 
 #dunkGif, #dunkVideo {
@@ -44,15 +115,14 @@ a {
 }
 
 #dunkGif {
-    margin-top: 80px;
-    margin-bottom: 10px;
 }
 
 #dunkVideo {
+    display: table-cell;
+    vertical-align: middle;
     width: 100%;
     background-image: url(http://i.imgur.com/CmK0jcX.gif);
     background-size: cover;
-    margin-top: 60px;
 }
 
 .footer {
