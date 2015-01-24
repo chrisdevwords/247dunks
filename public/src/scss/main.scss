@@ -106,8 +106,15 @@ a, a:link, a:hover, a:visited, a:active {
     position: relative;
     display: table-cell;
     vertical-align: middle;
+}
 
+.gif-wrap {
+    width: 100%;
+    text-align: center;
+}
 
+#dunkGif {
+    width: 100%;
 }
 
 #dunkGif, #dunkVideo {

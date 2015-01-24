@@ -7,7 +7,7 @@ var templates = require('../../templates/templates');
 var ImgurGifView = Backbone.View.extend({
 
     id : 'dunGif',
-    className : "gif-wrap-imgur",
+    className : "gif-wrap imgur",
     tagName : 'div',
     template : templates.imgurGif,
 
