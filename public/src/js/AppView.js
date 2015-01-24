@@ -8,12 +8,11 @@ var AppModel = require('./models/AppModel');
 module.exports = Backbone.View.extend({
 
     el: '#main',
-    useVideo : false,
 
     events : {
-        'click .new-dunk-btn' : 'newDunk', //todo need to add click handler for next dunk
-        'click .dunk-gif'     : 'newDunk',
-        'click #dunkVideo'    : 'newDunk',
+        'click .new-dunk-btn' : 'onNewDunkClick',
+        'click .dunk-gif'     : 'onNewDunkClick',
+        'click #dunkVideo'    : 'onNewDunkClick',
         'dunkComplete'        : 'onDunkComplete'
     },
 
@@ -47,6 +46,12 @@ module.exports = Backbone.View.extend({
 
     onDunkComplete: function (event, id) {
         this.model.dunkViewed(id, 'imgur');
+        this.newDunk();
+    },
+
+    onNewDunkClick : function (event) {
+        var dunk = this.dunkView.model;
+        this.model.dunkViewed(dunk.get('id'), 'imgur');
         this.newDunk();
     },
 
