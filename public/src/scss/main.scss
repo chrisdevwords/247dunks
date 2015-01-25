@@ -55,10 +55,11 @@ a, a:link, a:hover, a:visited, a:active {
 
     h1 {
         /* global styles */
-        font-size: 48px;
+        font-size: 36px;
         color: $orange;
         text-transform: uppercase;
-        font-family: 'Passion One', cursive;
+        font-family: 'Black Ops One', cursive;
+
         margin: 0;
         padding: 6px 12px;
         /* mobile styles */
@@ -66,13 +67,17 @@ a, a:link, a:hover, a:visited, a:active {
 
         @media (min-width:$break) {
             /* desktop styles */
+            font-size: 48px;
+
+        }
+        > span {
+            font-family: 'Paytone One', cursive;
         }
         > em {
             font-style: normal;
-            font-family: 'Black Ops One', cursive;
-
         }
         > small {
+            font-family: 'Paytone One', cursive;
             font-size: .7em;
             color: $purple;
             text-transform: lowercase;
