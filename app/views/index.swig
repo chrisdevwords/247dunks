@@ -7,7 +7,7 @@
     <meta name="description" content="All dunks, all the time. You're welcome.">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">    
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link href='http://fonts.googleapis.com/css?family=Passion+One|Black+Ops+One' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Passion+One|Black+Ops+One' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/public/dist/css/site.css"/>
     <script src="/public/dist/js/head.js"></script>
 </head>
