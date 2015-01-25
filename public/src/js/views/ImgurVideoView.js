@@ -8,7 +8,8 @@ var ImgurVideoView = Backbone.View.extend({
     id : 'dunkVideo',
     tagName : 'video',
     template : templates.imgurVideoSrc,
-    logOutput : true,
+    logOutput : false,
+    logErrors : true,
 
     attributes : {
         autoplay : 'autoplay',
@@ -23,12 +24,12 @@ var ImgurVideoView = Backbone.View.extend({
             this.$el.trigger('dunkComplete', this.model.get('id'));
         },
         'waiting' : function () {
-            if (this.logOutput) {
+            if (this.logOutput || this.logErrors) {
                 console.log('video waiting...');
             }
         },
         'stalled' : function () {
-            if (this.logOutput) {
+            if (this.logOutput || this.logErrors) {
                 console.log('video stalled...');
             }
         },
