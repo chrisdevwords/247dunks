@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     {% include "./social.html" %}
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href='//fonts.googleapis.com/css?family=Passion+One|Black+Ops+One' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Paytone+One|Black+Ops+One' rel='stylesheet' type='text/css'>
     <!-- build:css /public/dist/css/site.css -->
     <link href="/public/build/css/main.css" rel="stylesheet">
     <!-- endbuild -->
