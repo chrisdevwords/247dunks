@@ -8,6 +8,10 @@ $black: #002;
 
 $break: 768px;
 
+html {
+    background-color: $black;
+}
+
 body {
      /* global styles */
     color: $purple;
@@ -43,27 +47,25 @@ a, a:link, a:hover, a:visited, a:active {
 .main-header {
     /* global styles */
     width: 100%;
-    background-color: $grey;
+    //background-color: $grey;
     margin-bottom: 0;
     z-index: 1;
     position: fixed;
-    box-shadow: 0px 4px 4px #000;
+    //box-shadow: 0px 4px 4px #000;
     /* mobile styles */
     @media (min-width:$break) {
         /* desktop styles */
     }
-
     h1 {
         /* global styles */
         font-size: 36px;
         color: $orange;
         text-transform: uppercase;
         font-family: 'Black Ops One', cursive;
-
         margin: 0;
         padding: 6px 12px;
         /* mobile styles */
-        text-shadow: 2px 2px $black;
+        text-shadow: 2px 2px $grey;
 
         @media (min-width:$break) {
             /* desktop styles */
@@ -88,13 +90,107 @@ a, a:link, a:hover, a:visited, a:active {
 
 .top-nav {
     /* global styles */
-
     /* mobile styles */
     @media (min-width:$break) {
         /* desktop styles */
     }
 }
 
+.bottom-nav {
+    /* global styles */
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+    opacity:.25;
+    display: table;
+    @include simple-transition(opacity, .25s, ease-in);
+    /* mobile styles */
+    @media (min-width:$break) {
+        /* desktop styles */
+        max-width: 600px;
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+
+.controls {
+    $iconSize: 36px;
+    /* global styles */
+    font-size: $iconSize;
+    display:table-cell;
+    vertical-align: middle;
+    /* mobile styles */
+    @media (min-width:$break) {
+        /* desktop styles */
+    }
+}
+
+.controls-left {
+    width: 33%;
+    text-align: center;
+}
+.controls-center {
+    width: 33%;
+    text-align: center;
+}
+.controls-right {
+    width: 33%;
+    text-align: right;
+}
+
+.control-btn {
+    width: auto;
+    display: inline-block;
+    position: relative;
+    color: $purple;
+    cursor: pointer;
+    margin-right: .5em;
+    &:hover {
+        color: $orange;
+    }
+}
+
+
+.full-screen-toggle {
+    /* global styles */
+    /* mobile styles */
+    display: none;
+    @media (min-width:$break) {
+        /* desktop styles */
+        display: inline-block;
+    }
+}
+
+.full-screen {
+    .full-screen-btn {
+        display: none;
+    }
+    .full-screen-close-btn {
+        /* mobile styles */
+        display: none;
+        @media (min-width:$break) {
+            /* desktop styles */
+            display: inline-block;
+        }
+    }
+    .bottom-nav {
+        @media (min-width:$break) {
+            /* desktop styles */
+            position: absolute;
+            max-width: none;
+        }
+    }
+
+}
+
+.full-screen-close-btn {
+    @media (min-width: $break) {
+        display: none;
+    }
+}
 
 .content {
     /* global styles */
@@ -153,26 +249,20 @@ a, a:link, a:hover, a:visited, a:active {
         /* desktop styles */
         width: auto;
         min-width: 600px;
-        &.full-screen {
-            width: 100%;
-        }
+
     }
 }
-.portrait #dunkVideo {
-    /* global styles */
-    /* mobile styles */
-    width: auto;
-    height: 100%;
-    @media (min-width:$break) {
-        /* desktop styles */
-        height: auto;
-        &.full-screen {
-            width: auto;
-            height: 100%;
-        }
+.full-screen {
+    #dunkVideo {
+        width: 100%;
+    }
+    .portrait #dunkVideo {
+        width: auto;
+        height: 100%;
     }
 
 }
+
 
 
 

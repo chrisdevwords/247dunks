@@ -12,6 +12,8 @@
           </section>
 
           <footer class="footer" id="footer">
+              <nav class="bottom-nav" id="bottomNav">
+              </nav>
               <p>All Dunks, All The Time &copy; 2015 <a href="http://github.com/chrisdevwords/247dunks">Chris Edwards</a>.</p>
           </footer>
     </main>
@@ -25,4 +27,22 @@
     <source src="<%- obj.gifv %>" type='video/gifv'>
     <source src="<%- obj.mp4 %>" type='video/mp4'>
     <source src="<%- obj.webm %>" type='video/webm'>
+</script>
+
+<script type="text/template" id="videoControls">
+    <ul class="controls-left controls"></ul>
+    <ul class="controls-center controls"></ul>
+    <ul class="controls-right controls">
+        <li class="control-btn full-screen-close-btn full-screen-toggle">
+            <i class="fa fa-compress"></i>
+        </li>
+        <li class="control-btn full-screen-btn full-screen-toggle">
+            <i class="fa fa-expand"></i>
+        </li>
+    </ul>
+
+</script>
+
+<script type="text/template" id="gifControls">
+
 </script>

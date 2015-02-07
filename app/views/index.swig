@@ -6,6 +6,7 @@
     {% include "./social.html" %}
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href='//fonts.googleapis.com/css?family=Paytone+One|Black+Ops+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/public/dist/css/site.css"/>
     <script src="/public/dist/js/head.js"></script>
 </head>

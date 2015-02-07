@@ -9,5 +9,12 @@
   background: -ms-radial-gradient(center, ellipse cover,  #363636 1%,#333333 100%); /* IE10+ */
   background: radial-gradient(ellipse at center,  #363636 1%,#333333 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#363636', endColorstr='#333333',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
+}
 
+@mixin simple-transition($transition-property, $transition-time, $method: linear, $delay: 0s) {
+  -webkit-transition: $transition-property $transition-time $method $delay;
+  -moz-transition: $transition-property $transition-time $method $delay;
+  -ms-transition: $transition-property $transition-time $method $delay;
+  -o-transition: $transition-property $transition-time $method $delay;
+  transition: $transition-property $transition-time $method $delay;
 }

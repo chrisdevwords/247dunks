@@ -3,7 +3,9 @@
 var Backbone = require('backbone');
 var templates = require('../templates/templates');
 var DunkView = require('./views/DunkView');
+var Controls = require('./views/Controls');
 var AppModel = require('./models/AppModel');
+var FullScreen = require('./lib/FullScreen');
 
 module.exports = Backbone.View.extend({
 
@@ -31,10 +33,17 @@ module.exports = Backbone.View.extend({
         this.dunkView = new DunkView(options);
         this.dunkView.render();
 
+        this.controls = new Controls(options);
+        this.controls.render();
+
         this.model.fetch().done(function(){
             self.newDunk();
         }).fail(function(err) {
             console.log(err);
+        });
+
+        FullScreen.getInstance().on(FullScreen.FULL_SCREEN_CHANGE, function(){
+            self.$el.toggleClass('full-screen');
         });
 
     },
