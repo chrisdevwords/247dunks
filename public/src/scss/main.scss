@@ -158,6 +158,21 @@ a, a:link, a:hover, a:visited, a:active {
         }
     }
 }
+.portrait #dunkVideo {
+    /* global styles */
+    /* mobile styles */
+    width: auto;
+    height: 100%;
+    @media (min-width:$break) {
+        /* desktop styles */
+        height: auto;
+        &.full-screen {
+            width: auto;
+            height: 100%;
+        }
+    }
+
+}
 
 
 

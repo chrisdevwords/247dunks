@@ -21,7 +21,18 @@ var DunkView = Backbone.View.extend({
 
         this.model = new DunkModel();
         this.mediaViews.imgur = new ImgurView(_.extend(options, {model: this.model}));
+        this.model.on('change:orientation', this.onOrientationChange, this);
+    },
 
+    onOrientationChange : function (model, orientation) {
+        switch (orientation) {
+            case 'portrait':
+                this.$el.addClass('portrait');
+                break;
+            default :
+                this.$el.removeClass('portrait');
+                break;
+        }
     },
 
     setMedium : function (medium) {
@@ -37,6 +48,7 @@ var DunkView = Backbone.View.extend({
     },
 
     render : function () {
+
         DunkView.__super__.render.call(this);
         return this.setMedium('imgur');
     }
