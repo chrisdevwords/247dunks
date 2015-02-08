@@ -1,7 +1,6 @@
 "use strict";
 
 var Backbone = require('backbone');
-var templates = require('../templates/templates');
 var DunkView = require('./views/DunkView');
 var Controls = require('./views/Controls');
 var AppModel = require('./models/AppModel');
@@ -21,8 +20,6 @@ module.exports = Backbone.View.extend({
     initialize: function (options) {
 
         var self = this;
-
-        this.render();
 
         this.model = new AppModel({}, {
             defaultData : {
@@ -46,11 +43,6 @@ module.exports = Backbone.View.extend({
             self.$el.toggleClass('full-screen');
         });
 
-    },
-
-    render: function () {
-        this.$el.html(templates.mainTemplate({header : '247 Dunks!'})); //todo this will go into swig
-        return this.delegateEvents();
     },
 
     onDunkComplete: function (event, id) {

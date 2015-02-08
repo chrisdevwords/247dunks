@@ -11,8 +11,8 @@
     <script src="/public/dist/js/head.js"></script>
 </head>
 <body>
-    <div class="site-wrapper" id="main">
-        
+    <div class="site-wrapper">
+        {% include "./content.html" %}
     </div>
     {% if serverVars %}
     <script>
