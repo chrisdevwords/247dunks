@@ -4,7 +4,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
 var ViewedDunks = require('../collections/ViewedDunks');
-var ImgurDunks = require('../collections/Dunks');
+var Dunks = require('../collections/Dunks');
 var Settings = require('../collections/Settings');
 
 
@@ -12,8 +12,10 @@ var AppModel = Backbone.Model.extend({
 
     defaults : function () {
         return {
+	        medium : 'imgur',
             pages : new Settings.Pages,
-            imgur : new ImgurDunks,
+	        imgur : new Dunks.Imgur,
+	        youtube : new Dunks.Youtube,
             viewed : new ViewedDunks
         }
     },
@@ -21,26 +23,28 @@ var AppModel = Backbone.Model.extend({
     initialize : function (atts, options) {
 
         this.options = options;
+        //todo add a default page to the options for medium
         this.get('imgur').add(options.defaultData.imgur);
-
+	    this.get('youtube').add(options.defaultData.youtube.items);
     },
 
     fetch : function () {
 
         var self = this;
         var pages = this.get('pages');
+	    var medium = this.get('medium');
 
         return this.get('viewed').fetch()
             .then(function(){
                 return pages.fetch();
             })
             .then(function() {
-                if (!pages.get('imgur')) {
-                    pages.create({id: 'imgur', val: 0});
-                } else if (pages.getPage('imgur')) {
-                    return self.fetchPage('imgur', pages.getPage('imgur'));
+		        if (!pages.get(medium)) {
+		            pages.create({id: medium, val: 0}); //todo get the the default page of a medium
+		        } else if (pages.getPage(medium)) {
+		            return self.fetchPage(medium, pages.getPage(medium));
                 }
-                return self.curate('imgur');
+		        return self.curate(medium);
             });//append other then -> this.curate(medium)
     },
 
@@ -49,15 +53,15 @@ var AppModel = Backbone.Model.extend({
         var def = $.Deferred();
         var dunks = this.get(medium);
         var pages = this.get('pages');
-        var viewed = this.get('viewed');
+        var viewed = this.get('viewed').where({medium:medium});
 
-        dunks.remove(viewed.pluck('id'));
+        dunks.remove(_.pluck(viewed, 'id'));
 
         if (dunks.length) {
             def.resolve();
         } else {
             // increment medium page no.
-            return this.fetchPage(medium, pages.increment('imgur'));
+	        return this.fetchPage(medium, pages.increment(medium));
         }
 
         return def.promise();
@@ -98,8 +102,7 @@ var AppModel = Backbone.Model.extend({
 
     nextDunk : function () {
 
-        var index;
-        var medium = 'imgur';
+	var medium = this.get('medium');
         var def = $.Deferred();
         var dunks = this.get(medium);
 

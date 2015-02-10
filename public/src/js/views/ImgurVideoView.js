@@ -21,7 +21,7 @@ var ImgurVideoView = Backbone.View.extend({
             if (this.logOutput) {
                 console.log('video ended...');
             }
-            this.$el.trigger('dunkComplete', this.model.get('id'));
+	        this.$el.trigger('dunkComplete', this.model.toJSON());
         },
         'waiting' : function () {
             if (this.logOutput || this.logErrors) {
@@ -57,7 +57,11 @@ var ImgurVideoView = Backbone.View.extend({
     },
 
     renderSrc : function () {
-        this.$el.html(this.template(this.model.toJSON()));
+	    var model = this.model.toJSON();
+	    if (model.medium !== 'imgur') {
+	        return;
+	    }
+	    this.$el.html(this.template(model));
         this.el.load();
         return this.delegateEvents();
     }

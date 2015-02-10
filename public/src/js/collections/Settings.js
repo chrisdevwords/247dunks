@@ -14,9 +14,9 @@ var Pages = Backbone.Collection.extend({
     }),
 
     increment : function (medium) {
-        var pageNum = this.get(medium).get('val') + 1;
-        this.get(medium).save({val: pageNum});
-        return pageNum;
+        var page = this.get(medium).get('val') + 1;
+        this.get(medium).save({val: page});
+        return page;
     },
 
     floor : function (medium) {

@@ -21,9 +21,10 @@ module.exports = Backbone.View.extend({
 
         var self = this;
 
-        this.model = new AppModel({}, {
+	    this.model = new AppModel({medium:options.medium}, {
             defaultData : {
-                imgur : options.imgur.data
+                imgur : options.imgur,
+                youtube : options.youtube
             }
         });
 
@@ -45,14 +46,14 @@ module.exports = Backbone.View.extend({
 
     },
 
-    onDunkComplete: function (event, id) {
-        this.model.dunkViewed(id, 'imgur');
+    onDunkComplete: function (event, dunk) {
+	    this.model.dunkViewed(dunk.id, dunk.medium);
         this.newDunk();
     },
 
     onNewDunkClick : function (event) {
         var dunk = this.dunkView.model;
-        this.model.dunkViewed(dunk.get('id'), 'imgur');
+	    this.model.dunkViewed(dunk.get('id'), dunk.get('medium'));
         this.newDunk();
     },
 

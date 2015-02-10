@@ -3,7 +3,16 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 
-module.exports =  Backbone.Collection.extend({
+var Dunks =  Backbone.Collection.extend({
+
+    random : function () {
+	    return this.at(Math.floor(this.length * Math.random()));
+    }
+
+});
+
+
+var ImgurDunks =  Dunks.extend({
 
     parse : function (data) {
         if ( !_.isEmpty(data) && _.isArray(data.data)) {
@@ -12,16 +21,50 @@ module.exports =  Backbone.Collection.extend({
         return data;
     },
 
-    random : function () {
-        return this.at(Math.floor(this.length * Math.random()));
-    },
-
     url : function() {
-        return 'api/imgur/dunks';
+	    return 'api/imgur/dunks';
     }
 
 });
 
+var YoutubeDunks =  Dunks.extend({
+
+    model:Backbone.Model.extend({
+
+        defaults : {
+            medium : 'youtube'
+        },
+
+        parse : function (data) {
+            if (!_.isEmpty(data.id)) {
+                data.id =  data.id.videoId;
+            }
+            return data;
+       },
+       initialize : function (atts, options) {
+           if(_.isObject(atts.id)){
+               this.set('id', atts.id.videoId);
+           }
+       }
+    }),
+
+    parse : function (data) {
+        if ( !_.isEmpty(data) && _.isArray(data.items)) {
+            return data.items;
+        }
+	    return [];
+    },
+
+    url : function() {
+	    return 'api/youtube/dunks';
+    }
+
+});
+
+module.exports = {
+    Imgur   : ImgurDunks,
+    Youtube : YoutubeDunks
+};
 
 
 

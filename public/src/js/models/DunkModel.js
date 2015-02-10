@@ -2,7 +2,11 @@
 
 var Backbone = require('backbone');
 
-module.exports = Backbone.Model.extend({
+var DunkModel = Backbone.Model.extend({
+
+    defaults : {
+	    medium : 'imgur'
+    },
 
     initialize : function (options) {
         this.on('change', this.checkWidth);
@@ -11,3 +15,5 @@ module.exports = Backbone.Model.extend({
         this.set('orientation', this.get('width') > this.get('height') ? 'landscape' : 'portrait');
     }
 });
+
+module.exports = DunkModel;

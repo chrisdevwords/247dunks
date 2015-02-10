@@ -13,11 +13,14 @@ var app = module.exports = {};
 $(function () {
 
     var SV = root.__SERVER_VARS__ || {};
-    var imgurData = JSON.parse(SV.imgur || "{}");
+    var imgur = JSON.parse(SV.imgur || "{data:{}}");
+    var youtube = SV.youtube || {};
 
     app.view = new AppView({
         useVideo : $('html').hasClass('no-touch'),
-        imgur :imgurData
+        medium : 'youtube',
+        imgur :imgur.data,
+        youtube : youtube
     });
 
     window.app = app;

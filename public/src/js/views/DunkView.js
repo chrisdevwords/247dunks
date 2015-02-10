@@ -5,6 +5,7 @@ var Backbone = require('backbone');
 var DunkModel = require('./../models/DunkModel');
 var ImgurVideoView = require('./ImgurVideoView');
 var ImgurGifView = require('./ImgurGifView');
+var YoutubeView = require('./YoutubeView');
 
 var DunkView = Backbone.View.extend({
 
@@ -17,11 +18,18 @@ var DunkView = Backbone.View.extend({
 
     initialize : function (options) {
 
-        var ImgurView = options.useVideo ? ImgurVideoView : ImgurGifView;
-
-        this.model = new DunkModel();
-        this.mediaViews.imgur = new ImgurView(_.extend(options, {model: this.model}));
+        this.model = new DunkModel({medium:options.medium});
+    	options = _.extend(options, {model: this.model});
+	    if (options.useVideo) {
+	        this.mediaViews.imgur = new ImgurVideoView(options);
+	        this.mediaViews.youtube = new YoutubeView(options)
+	    } else {
+	        this.mediaViews.imgur = new ImgurGifView(options);
+	    }
         this.model.on('change:orientation', this.onOrientationChange, this);
+        this.model.on('change:medium', function(model, medium) {
+            this.setMedium(medium);
+        }, this);
     },
 
     onOrientationChange : function (model, orientation) {
@@ -48,9 +56,8 @@ var DunkView = Backbone.View.extend({
     },
 
     render : function () {
-
         DunkView.__super__.render.call(this);
-        return this.setMedium('imgur');
+        return this.setMedium(this.model.get('medium'));
     }
 });
 
