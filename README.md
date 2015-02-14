@@ -22,6 +22,10 @@ or with Heroku Toolbelt/Foreman:
 ```sh
 $ foreman start web
 ```
+and with nodemon:
+```
+$ foremean start dev
+```
 ### to watch and build dev assets, in a seperate bash tab:
 ```
 $ gulp
