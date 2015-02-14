@@ -2,6 +2,7 @@
 
 var _ = require('underscore');
 var Proxy = require('./Proxy');
+var $ = require('jquery-deferred');
 
 var API_KEY;
 
@@ -11,16 +12,27 @@ function Imgur (api_key) {
 
 _.extend(Imgur.prototype, {
 	
-	search : function (query, sort, page, onResult) {
+	search : function (query, sort, page) {
+
+		var def = $.Deferred();
 		var proxy = new Proxy();
 		var options = {
   			host: 'api.imgur.com',
   			path: '/3/gallery/search/' + sort + '/' + page + '/?q='+query,
     		headers: {
-        		'Authorization'	: 'Client-ID ' + API_KEY,
+        		'Authorization'	: 'Client-ID ' + API_KEY
     		}
 		};
-		return proxy.getJSON(options, onResult);
+
+		proxy.getJSON(options, function (status, response) {
+			if (status === 200) {
+				def.resolve({status:status, data:response});
+			} else {
+				def.reject({status:status, data:response});
+			}
+		});
+
+		return def.promise();
 	}
 });
 

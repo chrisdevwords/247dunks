@@ -16,9 +16,6 @@ _.extend(Proxy.prototype, {
 		var output = '';
 		
 		options = options || {};
-		options.headers = _.extend({
-		}, options.headers);
-		
 		options = _.extend({port: 443, method : 'GET'}, options);
 		
 		prot = options.port == 443 ? https : http;

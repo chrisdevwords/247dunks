@@ -6,16 +6,17 @@ var Imgur = require('../lib/Imgur');
 
 /* GET home page */
 router.get('/', function(req, res){
-    var gifs;
+    var imgurData;
     var imgur = new Imgur(process.env.IMGUR_KEY || req.param('imgur_key') || '');
-    imgur.search('dunk+ext%3Agif', 'top', 0, function (status, resp) {
-        gifs = JSON.parse(resp).data;
-        res.render('index', {
-            title : '247 Dunks!',
-            imgur : resp,
-            serverVars : true   
+    imgur.search('dunk+ext%3Agif', 'top', 0)
+        .always( function (resp) {
+            imgurData = resp.data;
+            res.render('index', {
+                title : '247 Dunks!',
+                imgur : imgurData,
+                serverVars : true
+            });
         });
-    });
 });
 
 module.exports = router;
