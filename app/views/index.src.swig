@@ -22,6 +22,7 @@
     <script>
         window.__SERVER_VARS__ = {};
         window.__SERVER_VARS__.imgur = {%autoescape false%}{{imgur|json_encode}}{%endautoescape%};
+        window.__SERVER_VARS__.youtube = {%autoescape false%}{{youtube|json_encode}}{%endautoescape%};
     </script>
     {% endif %}
     <!-- build:js /public/dist/js/bundle.js -->
