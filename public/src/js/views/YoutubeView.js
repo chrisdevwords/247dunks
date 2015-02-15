@@ -28,9 +28,12 @@ var YoutubeView = Backbone.View.extend({
         if (model.medium !== 'youtube') {
             return;
         }
-        this.loadSWFObject().done(function(player){
-            player.loadVideoById(model.id);
-        });
+        this.loadSWFObject()
+            .done(function(player){
+                player.loadVideoById(model.id);
+            }).fail(function(err){
+                console.error(err);
+            });
         return this.delegateEvents();
     },
 
@@ -44,9 +47,12 @@ var YoutubeView = Backbone.View.extend({
             def.resolve(this.player);
             return def.promise();
         }
-
+        if (!swfobject.hasFlashPlayerVersion("10.1")) {
+            def.reject({message:'flash player 10.1 not available'});
+            return def.promise();
+        }
         url = "http://www.youtube.com/apiplayer?enablejsapi=1&version=3&playerapiid=" + id;
-        swfobject.embedSWF(url, id, "100%", "100%", "9", null, null, { id: id }, { allowScriptAccess: "always" });
+        swfobject.embedSWF(url, id, "100%", "100%", "10.1", null, null, { id: id }, { allowScriptAccess: "always" });
         root.onYouTubePlayerReady = function (playerId) {
             self.bindPlayer(playerId);
             def.resolve(self.player);
