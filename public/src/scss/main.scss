@@ -270,6 +270,40 @@ a, a:link, a:hover, a:visited, a:active {
     height: 100%;
 }
 
+#youtubeWrap > .new-dunk-btn {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 5% 10%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    font-size: 100px;
+    text-align: center;
+    z-index: 9999;
+    color: $purple;
+    opacity: 0;
+    @include simple-transition(opacity, .25s, ease-in);
+    &:hover{
+        opacity: .5;
+    }
+    .fa {
+      margin: 0 auto;
+    }
+    >span {
+      display: block;
+      white-space: nowrap;
+      font-size: .2em;
+      font-family: 'Paytone One', sans-serif;
+      position: relative;
+      margin: -.25em auto;
+
+    }
+    @media (min-width: 360px) {
+      /* desktop styles */
+      font-size: 200px;
+    }
+}
 
 
 .footer {
