@@ -29,6 +29,8 @@ var ImgurDunks =  Dunks.extend({
 
 var YoutubeDunks =  Dunks.extend({
 
+    nextPageToken : null,
+
     model:Backbone.Model.extend({
 
         defaults : {
@@ -49,10 +51,15 @@ var YoutubeDunks =  Dunks.extend({
     }),
 
     parse : function (data) {
+
+        this.nextPageToken = data.nextPageToken;
+
         if ( !_.isEmpty(data) && _.isArray(data.items)) {
             return data.items;
         }
+
 	    return [];
+
     },
 
     url : function() {

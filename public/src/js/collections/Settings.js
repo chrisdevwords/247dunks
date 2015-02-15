@@ -13,8 +13,8 @@ var Pages = Backbone.Collection.extend({
         }
     }),
 
-    increment : function (medium) {
-        var page = this.get(medium).get('val') + 1;
+    increment : function (medium, token) {
+        var page = token ? token : this.get(medium).get('val') + 1;
         this.get(medium).save({val: page});
         return page;
     },

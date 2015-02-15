@@ -12,8 +12,8 @@ var DunkView = Backbone.View.extend({
     el : '#content',
 
     mediaViews : {
-      imgur : null,
-      youtube : null
+        imgur : null,
+        youtube : null
     },
 
     initialize : function (options) {

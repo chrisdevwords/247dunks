@@ -21,11 +21,13 @@ var AppModel = Backbone.Model.extend({
     },
 
     initialize : function (atts, options) {
-
+        var youtube;
         this.options = options;
         //todo add a default page to the options for medium
+        //try using reset?
         this.get('imgur').add(options.defaultData.imgur);
-	    this.get('youtube').add(options.defaultData.youtube.items);
+	    youtube = this.get('youtube');
+        youtube.add(youtube.parse(options.defaultData.youtube));
     },
 
     fetch : function () {
@@ -61,7 +63,7 @@ var AppModel = Backbone.Model.extend({
             def.resolve();
         } else {
             // increment medium page no.
-	        return this.fetchPage(medium, pages.increment(medium));
+	        return this.fetchPage(medium, pages.increment(medium, dunks.nextPageToken));
         }
 
         return def.promise();
@@ -102,7 +104,7 @@ var AppModel = Backbone.Model.extend({
 
     nextDunk : function () {
 
-	var medium = this.get('medium');
+	    var medium = this.get('medium');
         var def = $.Deferred();
         var dunks = this.get(medium);
 
