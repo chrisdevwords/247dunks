@@ -1,6 +1,7 @@
 "use strict";
 
 var $ = require('jquery');
+var _ = require('underscore');
 var Backbone = require('backbone');
 var templates = require('../../templates/templates');
 var swfobject = require('swfobject');
@@ -13,9 +14,14 @@ var YoutubeView = Backbone.View.extend({
     template: templates.youtubePlayer,
     player: null,
 
-    initialize : function () {
-        this.model.bind('change:id', this.loadVideo, this);
+    ytEvents : {
+        'onStateChange' : 'onYTStateChange',
+        'onError'       : 'onYTError',
+        'onApiChange'   : 'onYTApiChange'
     },
+
+
+    initialize : function () {},
 
     loadVideo : function () {
         var model = this.model.toJSON();
@@ -69,15 +75,29 @@ var YoutubeView = Backbone.View.extend({
             console.log('youtube api change', player.getOptions());
         };
 
-        player.addEventListener('onStateChange', 'onYTStateChange');
-        player.addEventListener('onError', 'onYTError');
-        player.addEventListener('onApiChange', 'onYTApiChange');
+        _.each(this.ytEvents, function (listener, event) {
+            player.addEventListener(event, listener);
+        });
 
         this.player = player;
     },
 
+
+    remove : function () {
+        if (this.player) {
+            _.each(this.ytEvents, function (listener, event) {
+                this.player.removeEventListener(event, listener);
+                root[listener] = null;
+            }, this);
+            this.player = null;
+        }
+        root.onYouTubePlayerReady = null;
+        YoutubeView.__super__.remove.call(this);
+    },
+
     render : function () {
 	    YoutubeView.__super__.render.call(this);
+        this.model.bind('change:id', this.loadVideo, this);
         this.$el.html(this.template());
 	    return this;
     }
