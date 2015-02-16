@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
 var _ = require('underscore');
 var Backbone = require('backbone');
 
 var ViewedDunks = Backbone.Collection.extend({
 
-    localStorage: new Backbone.LocalStorage("247Dunks_viewed"),
+    localStorage : new Backbone.LocalStorage('247Dunks_viewed'),
 
-    comparator: 'time',
+    comparator : 'time',
 
     model : Backbone.Model.extend({
         defaults : function () {
@@ -17,21 +17,19 @@ var ViewedDunks = Backbone.Collection.extend({
         }
     }),
 
-    clearMedium : function(medium) {
-        _.each(this.where({medium: medium}), function (model) {
+    clearMedium : function (medium) {
+        _.each(this.where({medium : medium}), function (model) {
             model.destroy();
         });
     },
 
     clearAll : function () {
-        this.each(function(model){
+        this.each(function (model) {
             model.destroy();
         });
     }
 
-
-    //todo this needs a clear method
-    //todo and a cap function
+    //todo this needs a cap function
     //todo and a expire by date function
 });
 

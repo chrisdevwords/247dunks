@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var $ = require('jquery');
 var _ = require('underscore');
@@ -9,17 +9,16 @@ var root = window || root || {};
 
 var YoutubeView = Backbone.View.extend({
 
-    id: 'youtubeWrap',
-    tagName: 'div',
-    template: templates.youtubePlayer,
-    player: null,
+    id : 'youtubeWrap',
+    tagName : 'div',
+    template : templates.youtubePlayer,
+    player : null,
 
     ytEvents : {
         'onStateChange' : 'onYTStateChange',
         'onError'       : 'onYTError',
         'onApiChange'   : 'onYTApiChange'
     },
-
 
     initialize : function () {},
 
@@ -29,33 +28,38 @@ var YoutubeView = Backbone.View.extend({
             return;
         }
         this.loadSWFObject()
-            .done(function(player){
+            .done(function (player) {
                 player.loadVideoById(model.id);
-            }).fail(function(err){
+            }).fail(function (err) {
                 console.error(err);
             });
         return this.delegateEvents();
     },
 
     loadSWFObject : function () {
-        var self = this;
+
+        var _this = this;
         var def = $.Deferred();
         var id = 'ytPlayer';
         var url;
+        var atts;
+        var params;
 
         if (this.player) {
             def.resolve(this.player);
             return def.promise();
         }
-        if (!swfobject.hasFlashPlayerVersion("10.1")) {
-            def.reject({message:'flash player 10.1 not available'});
+        if (!swfobject.hasFlashPlayerVersion('10.1')) {
+            def.reject({message : 'flash player 10.1 not available'});
             return def.promise();
         }
-        url = "http://www.youtube.com/apiplayer?enablejsapi=1&version=3&playerapiid=" + id;
-        swfobject.embedSWF(url, id, "100%", "100%", "10.1", null, null, { id: id }, { allowScriptAccess: "always" });
+        url = 'http://www.youtube.com/apiplayer?enablejsapi=1&version=3&playerapiid=' + id;
+        atts = {id : id};
+        params = {allowScriptAccess : 'always'};
+        swfobject.embedSWF(url, id, '100%', '100%', '10.1', null, null, atts, params);
         root.onYouTubePlayerReady = function (playerId) {
-            self.bindPlayer(playerId);
-            def.resolve(self.player);
+            _this.bindPlayer(playerId);
+            def.resolve(_this.player);
         };
 
         return def.promise();
@@ -63,20 +67,22 @@ var YoutubeView = Backbone.View.extend({
 
     bindPlayer : function (playerId) {
 
-        var self = this;
+        var _this = this;
         var player = document.getElementById(playerId);
 
-        root.onYTStateChange = function (state){
+        root.onYTStateChange = function (state) {
             console.log('state change', state);
             switch (state) {
                 case 0 :
-                    self.$el.trigger('dunkComplete', self.model.toJSON());
+                    _this.$el.trigger('dunkComplete', _this.model.toJSON());
                     break;
             }
         };
+
         root.onYTError = function (code) {
             console.error('youtube error', code);
         };
+
         root.onYTApiChange = function () {
             console.log('youtube api change', player.getOptions());
         };
@@ -87,7 +93,6 @@ var YoutubeView = Backbone.View.extend({
 
         this.player = player;
     },
-
 
     remove : function () {
         if (this.player) {
@@ -102,10 +107,10 @@ var YoutubeView = Backbone.View.extend({
     },
 
     render : function () {
-	    YoutubeView.__super__.render.call(this);
+        YoutubeView.__super__.render.call(this);
         this.model.bind('change:id', this.loadVideo, this);
         this.$el.html(this.template());
-	    return this;
+        return this;
     }
 
 });

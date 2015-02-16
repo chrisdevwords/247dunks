@@ -1,13 +1,12 @@
-"use strict";
+'use strict';
 
 var Backbone = require('backbone');
 var templates = require('../../templates/templates');
 var FullScreen = require('../lib/FullScreen');
 
-
 var Controls = Backbone.View.extend({
 
-    el: '#bottomNav',
+    el : '#bottomNav',
 
     events : {
         'click .full-screen-toggle' : 'toggleFullScreen'
@@ -15,11 +14,9 @@ var Controls = Backbone.View.extend({
 
     initialize : function (options) {
         if (options.useVideo) {
-            //set template to video controls
             this.template = templates.videoControls;
         } else {
             this.template = templates.gifControls;
-            //set template to gif controls?
         }
     },
 
@@ -30,12 +27,8 @@ var Controls = Backbone.View.extend({
     },
 
     toggleFullScreen : function () {
-
         FullScreen.getInstance().toggle();
-
     }
 });
 
 module.exports = Controls;
-
-

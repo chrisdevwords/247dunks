@@ -1,10 +1,11 @@
-"use strict";
+'use strict';
 
 var Backbone = require('backbone');
 
 var Pages = Backbone.Collection.extend({
 
-    localStorage: new Backbone.LocalStorage("247Dunks_page"),
+    localStorage : new Backbone.LocalStorage('247Dunks_page'),
+
     model : Backbone.Model.extend({
         defaults : function () {
             return {
@@ -15,12 +16,12 @@ var Pages = Backbone.Collection.extend({
 
     increment : function (medium, token) {
         var page = token ? token : this.get(medium).get('val') + 1;
-        this.get(medium).save({val: page});
+        this.get(medium).save({val : page});
         return page;
     },
 
     floor : function (medium) {
-        this.get(medium).save({val: 0});
+        this.get(medium).save({val : 0});
         return 0;
     },
 
@@ -28,6 +29,7 @@ var Pages = Backbone.Collection.extend({
         var medium = this.get(medium);
         return medium ? medium.get('val') : 0;
     }
+
 });
 
-module.exports = {Pages:Pages};
+module.exports = {Pages : Pages};

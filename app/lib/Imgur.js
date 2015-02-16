@@ -1,39 +1,39 @@
-"use strict";
+'use strict';
 
-var _ = require('underscore');
 var Proxy = require('./Proxy');
 var $ = require('jquery-deferred');
 
-var API_KEY;
-
-function Imgur (api_key) {
-	API_KEY = api_key;
+function Imgur (apiKey) {
+    this.apiKey = apiKey;
 }
 
-_.extend(Imgur.prototype, {
-	
-	search : function (query, sort, page) {
+Imgur.prototype.search = function (query, sort, page) {
 
-		var def = $.Deferred();
-		var proxy = new Proxy();
-		var options = {
-  			host: 'api.imgur.com',
-  			path: '/3/gallery/search/' + sort + '/' + page + '/?q='+query,
-    		headers: {
-        		'Authorization'	: 'Client-ID ' + API_KEY
-    		}
-		};
+    var def = $.Deferred();
+    var proxy = new Proxy();
+    var options = {
+        host : 'api.imgur.com',
+        path : '/3/gallery/search/' + sort + '/' + page + '/?q=' + query,
+        headers : {
+            'Authorization'	: 'Client-ID ' + this.apiKey
+        }
+    };
 
-		proxy.getJSON(options, function (status, response) {
-			if (status === 200) {
-				def.resolve({status:status, data:response});
-			} else {
-				def.reject({status:status, data:response});
-			}
-		});
+    proxy.getJSON(options,
+        function (status, response) {
+            var resp = {
+                status : status,
+                data : response
+            };
+            if (status === 200) {
+                def.resolve(resp);
+            } else {
+                def.reject(resp);
+            }
+        }
+    );
 
-		return def.promise();
-	}
-});
+    return def.promise();
+};
 
 module.exports = Imgur;

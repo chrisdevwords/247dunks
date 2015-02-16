@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _ = require('underscore');
 var Backbone = require('backbone');
@@ -8,22 +8,22 @@ var _instance;
 
 function FullScreen () {
 
-    var self = this;
+    var _this = this;
 
-    var _onFullScreenChange = function (e) {
-        self.trigger(FullScreen.FULL_SCREEN_CHANGE);
-        if (self.isFullScreen()) {
-            self.trigger(FullScreen.ENTER_FULL_SCREEN);
+    var _onFullScreenChange = function () {
+        _this.trigger(FullScreen.FULL_SCREEN_CHANGE);
+        if (_this.isFullScreen()) {
+            _this.trigger(FullScreen.ENTER_FULL_SCREEN);
         } else {
-            self.trigger(FullScreen.EXIT_FULL_SCREEN);
+            _this.trigger(FullScreen.EXIT_FULL_SCREEN);
         }
     };
 
-    _.each(_EVENT_TYPES, function (eventType){
-       document.addEventListener(eventType, _onFullScreenChange);
+    _.each(_EVENT_TYPES, function (eventType) {
+        document.addEventListener(eventType, _onFullScreenChange);
     });
 
-};
+}
 
 _.extend(FullScreen, {
 
@@ -32,7 +32,7 @@ _.extend(FullScreen, {
     ENTER_FULL_SCREEN  : 'enterFullScreen',
 
     getInstance : function () {
-        if(!_instance) {
+        if (!_instance) {
             _instance = new FullScreen();
         }
         return _instance;

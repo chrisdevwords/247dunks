@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _ = require('underscore');
 var Backbone = require('backbone');
@@ -18,16 +18,17 @@ var DunkView = Backbone.View.extend({
 
     initialize : function (options) {
 
-        this.model = new DunkModel({medium:options.medium});
-    	options = _.extend(options, {model: this.model});
-	    if (options.useVideo) {
-	        this.mediaViews.imgur = new ImgurVideoView(options);
-	        this.mediaViews.youtube = new YoutubeView(options)
-	    } else {
-	        this.mediaViews.imgur = new ImgurGifView(options);
-	    }
+        this.model = new DunkModel({medium : options.medium});
+        options = _.extend(options, {model : this.model});
+
+        if (options.useVideo) {
+            this.mediaViews.imgur = new ImgurVideoView(options);
+            this.mediaViews.youtube = new YoutubeView(options)
+        } else {
+            this.mediaViews.imgur = new ImgurGifView(options);
+        }
         this.model.on('change:orientation', this.onOrientationChange, this);
-        this.model.on('change:medium', function(model, medium) {
+        this.model.on('change:medium', function (model, medium) {
             this.setMedium(medium);
         }, this);
     },

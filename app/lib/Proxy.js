@@ -1,39 +1,32 @@
-"use strict";
+'use strict';
 
 var _ = require('underscore');
-var http = require("http");
-var https = require("https");
+var http = require('http');
+var https = require('https');
 
-function Proxy () {
+function Proxy () {}
 
-}
+Proxy.prototype.getJSON = function (options, onResult) {
 
-_.extend(Proxy.prototype, {
+    var prot;
+    var output = '';
 
-	getJSON : function (options, onResult) {
+    options = options || {};
+    options = _.extend({port : 443, method : 'GET'}, options);
+    prot = options.port == 443 ? https : http;
 
-		var prot;
-		var output = '';
-		
-		options = options || {};
-		options = _.extend({port: 443, method : 'GET'}, options);
-		
-		prot = options.port == 443 ? https : http;
+    return prot.request(options, function (res) {
 
-    	return prot.request(options, function(res) {
-  			//console.log('STATUS: ' + res.statusCode);
-  			//console.log('HEADERS: ' + JSON.stringify(res.headers));
-  			res.setEncoding('utf8');
-  			res.on('data', function (chunk) {
-    			output += chunk;
-  			});
-  			res.on('end', function(){
-  				onResult(res.statusCode, output);
-  			});
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+            output += chunk;
+        });
+        res.on('end', function () {
+            onResult(res.statusCode, output);
+        });
 
-		}).end();
-	}
+    }).end();
 
-});
+};
 
 module.exports = Proxy;

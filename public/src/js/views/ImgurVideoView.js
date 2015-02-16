@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var Backbone = require('backbone');
 var templates = require('../../templates/templates');
@@ -21,7 +21,7 @@ var ImgurVideoView = Backbone.View.extend({
             if (this.logOutput) {
                 console.log('video ended...');
             }
-	        this.$el.trigger('dunkComplete', this.model.toJSON());
+            this.$el.trigger('dunkComplete', this.model.toJSON());
         },
         'waiting' : function () {
             if (this.logOutput || this.logErrors) {
@@ -34,8 +34,6 @@ var ImgurVideoView = Backbone.View.extend({
             }
         },
         'loadedmetadata' : function () {
-            //$(this).parent().css('padding-top', ( .5*($(window).innerHeight()- $(this).height())) + 'px');
-            //console.log($(this).parent().attr('style'));
             if (this.logOutput) {
                 console.log('meta data...');
             }
@@ -57,11 +55,11 @@ var ImgurVideoView = Backbone.View.extend({
     },
 
     renderSrc : function () {
-	    var model = this.model.toJSON();
-	    if (model.medium !== 'imgur') {
-	        return;
-	    }
-	    this.$el.html(this.template(model));
+        var model = this.model.toJSON();
+        if (model.medium !== 'imgur') {
+            return;
+        }
+        this.$el.html(this.template(model));
         this.el.load();
         return this.delegateEvents();
     }

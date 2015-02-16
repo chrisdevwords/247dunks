@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var $ = require('jquery');
 var _ = require('underscore');
@@ -7,15 +7,14 @@ var ViewedDunks = require('../collections/ViewedDunks');
 var Dunks = require('../collections/Dunks');
 var Settings = require('../collections/Settings');
 
-
 var AppModel = Backbone.Model.extend({
 
     defaults : function () {
         return {
-	        medium : 'imgur',
+            medium : 'imgur',
             pages : new Settings.Pages,
-	        imgur : new Dunks.Imgur,
-	        youtube : new Dunks.Youtube,
+            imgur : new Dunks.Imgur,
+            youtube : new Dunks.Youtube,
             viewed : new ViewedDunks
         }
     },
@@ -23,31 +22,32 @@ var AppModel = Backbone.Model.extend({
     initialize : function (atts, options) {
         var youtube;
         this.options = options;
-        //todo add a default page to the options for medium
-        //try using reset?
         this.get('imgur').add(options.defaultData.imgur);
-	    youtube = this.get('youtube');
+        youtube = this.get('youtube');
         youtube.add(youtube.parse(options.defaultData.youtube));
     },
 
     fetch : function () {
 
-        var self = this;
+        var _this = this;
         var pages = this.get('pages');
-	    var medium = this.get('medium');
+        var medium = this.get('medium');
 
         return this.get('viewed').fetch()
-            .then(function(){
+            .then(function fetchPagesFromStorage () {
                 return pages.fetch();
             })
-            .then(function() {
-		        if (!pages.get(medium)) {
-		            pages.create({id: medium, val: 0}); //todo get the the default page of a medium
-		        } else if (pages.getPage(medium)) {
-		            return self.fetchPage(medium, pages.getPage(medium));
+            .then(function fetchCurrentMediumPage () {
+                if (!pages.get(medium)) {
+                    pages.create({
+                        id : medium,
+                        val : 0
+                    });
+                } else if (pages.getPage(medium)) {
+                    return _this.fetchPage(medium, pages.getPage(medium));
                 }
-		        return self.curate(medium);
-            });//append other then -> this.curate(medium)
+                return _this.curate(medium);
+            });
     },
 
     curate : function (medium) {
@@ -55,7 +55,7 @@ var AppModel = Backbone.Model.extend({
         var def = $.Deferred();
         var dunks = this.get(medium);
         var pages = this.get('pages');
-        var viewed = this.get('viewed').where({medium:medium});
+        var viewed = this.get('viewed').where({medium : medium});
 
         dunks.remove(_.pluck(viewed, 'id'));
 
@@ -63,23 +63,26 @@ var AppModel = Backbone.Model.extend({
             def.resolve();
         } else {
             // increment medium page no.
-	        return this.fetchPage(medium, pages.increment(medium, dunks.nextPageToken));
+            return this.fetchPage(
+                medium,
+                pages.increment(medium, dunks.nextPageToken)
+            );
         }
 
         return def.promise();
     },
 
-    fetchPage : function(medium, pageNum) {
+    fetchPage : function (medium, pageNum) {
 
-        var self = this;
+        var _this = this;
         var dunks = this.get(medium);
         var pages = this.get('pages');
         var viewed = this.get('viewed');
 
-        return dunks.fetch({data : {page : pageNum}}).then(function() {
+        return dunks.fetch({data : {page : pageNum}}).then(function () {
             if (!dunks.length && pageNum === 0) {
                 return $.Deferred().reject({
-                    message: medium + ' service returning empty'
+                    message : medium + ' service returning empty'
                 }).promise();
             }
             if (!dunks.length) {
@@ -89,35 +92,34 @@ var AppModel = Backbone.Model.extend({
                 // reset the page number to 0,
                 pages.floor(medium);
                 // set dunks to default from options
-                dunks.set(self.options.defaultData[medium])
+                dunks.set(_this.options.defaultData[medium])
             }
-            return self.curate(medium);
+            return _this.curate(medium);
         });
 
     },
 
     dunkViewed : function (id, medium) {
         var removed = this.get(medium).remove(id);
-        this.get('viewed').create({id: id, medium : medium});
+        this.get('viewed').create({id : id, medium : medium});
         return removed;
     },
 
     nextDunk : function () {
 
-	    var medium = this.get('medium');
+        var medium = this.get('medium');
         var def = $.Deferred();
         var dunks = this.get(medium);
 
-        if(dunks.length) {
+        if (dunks.length) {
             def.resolve(dunks.random());
         } else {
-            this.curate(medium).done(function(){
+            this.curate(medium).done(function () {
                 def.resolve(dunks.random());
             });
         }
         return def.promise();
     }
 });
-
 
 module.exports = AppModel;

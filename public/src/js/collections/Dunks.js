@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _ = require('underscore');
 var Backbone = require('backbone');
@@ -6,23 +6,22 @@ var Backbone = require('backbone');
 var Dunks =  Backbone.Collection.extend({
 
     random : function () {
-	    return this.at(Math.floor(this.length * Math.random()));
+        return this.at(Math.floor(this.length * Math.random()));
     }
 
 });
 
-
 var ImgurDunks =  Dunks.extend({
 
     parse : function (data) {
-        if ( !_.isEmpty(data) && _.isArray(data.data)) {
+        if (!_.isEmpty(data) && _.isArray(data.data)) {
             return data.data;
         }
         return data;
     },
 
-    url : function() {
-	    return 'api/imgur/dunks';
+    url : function () {
+        return 'api/imgur/dunks';
     }
 
 });
@@ -31,7 +30,7 @@ var YoutubeDunks =  Dunks.extend({
 
     nextPageToken : null,
 
-    model:Backbone.Model.extend({
+    model : Backbone.Model.extend({
 
         defaults : {
             medium : 'youtube'
@@ -42,28 +41,28 @@ var YoutubeDunks =  Dunks.extend({
                 data.id =  data.id.videoId;
             }
             return data;
-       },
-       initialize : function (atts, options) {
-           if(_.isObject(atts.id)){
-               this.set('id', atts.id.videoId);
-           }
-       }
+        },
+        initialize : function (atts) {
+            if (_.isObject(atts.id)) {
+                this.set('id', atts.id.videoId);
+            }
+        }
     }),
 
     parse : function (data) {
 
         this.nextPageToken = data.nextPageToken;
 
-        if ( !_.isEmpty(data) && _.isArray(data.items)) {
+        if (!_.isEmpty(data) && _.isArray(data.items)) {
             return data.items;
         }
 
-	    return [];
+        return [];
 
     },
 
-    url : function() {
-	    return 'api/youtube/dunks';
+    url : function () {
+        return 'api/youtube/dunks';
     }
 
 });
@@ -72,6 +71,3 @@ module.exports = {
     Imgur   : ImgurDunks,
     Youtube : YoutubeDunks
 };
-
-
-
