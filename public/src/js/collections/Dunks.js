@@ -2,6 +2,7 @@
 
 var _ = require('underscore');
 var Backbone = require('backbone');
+var DunkModel = require('../models/DunkModel');
 
 var Dunks =  Backbone.Collection.extend({
 
@@ -12,6 +13,8 @@ var Dunks =  Backbone.Collection.extend({
 });
 
 var ImgurDunks =  Dunks.extend({
+
+    model : DunkModel.Imgur,
 
     parse : function (data) {
         if (!_.isEmpty(data) && _.isArray(data.data)) {
@@ -29,36 +32,14 @@ var ImgurDunks =  Dunks.extend({
 var YoutubeDunks =  Dunks.extend({
 
     nextPageToken : null,
-
-    model : Backbone.Model.extend({
-
-        defaults : {
-            medium : 'youtube'
-        },
-
-        parse : function (data) {
-            if (!_.isEmpty(data.id)) {
-                data.id =  data.id.videoId;
-            }
-            return data;
-        },
-        initialize : function (atts) {
-            if (_.isObject(atts.id)) {
-                this.set('id', atts.id.videoId);
-            }
-        }
-    }),
+    model : DunkModel.Youtube,
 
     parse : function (data) {
-
         this.nextPageToken = data.nextPageToken;
-
         if (!_.isEmpty(data) && _.isArray(data.items)) {
             return data.items;
         }
-
         return [];
-
     },
 
     url : function () {

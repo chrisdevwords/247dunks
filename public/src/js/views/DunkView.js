@@ -18,7 +18,7 @@ var DunkView = Backbone.View.extend({
 
     initialize : function (options) {
 
-        this.model = new DunkModel({medium : options.medium});
+        this.model = new DunkModel.Dunk({medium : options.medium});
         options = _.extend(options, {model : this.model});
 
         if (options.useVideo) {

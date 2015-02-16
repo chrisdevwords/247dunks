@@ -20,11 +20,18 @@ var AppModel = Backbone.Model.extend({
     },
 
     initialize : function (atts, options) {
-        var youtube;
+
         this.options = options;
-        this.get('imgur').add(options.defaultData.imgur);
-        youtube = this.get('youtube');
-        youtube.add(youtube.parse(options.defaultData.youtube));
+
+        _.each(options.defaultData, function (data, medium) {
+            var col = this.get(medium);
+            if (col) {
+                col.add(col.parse(data));
+            } else {
+                console.error('collection not defined for', medium);
+            }
+        }, this);
+
     },
 
     fetch : function () {
