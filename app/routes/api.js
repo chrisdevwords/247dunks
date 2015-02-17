@@ -2,7 +2,7 @@
 
 var express = require('express');
 var router  = express.Router();
-var YouTube = require('youtube-node');
+var YouTube = require('../lib/DunkTube');
 var Imgur   = require('../lib/Imgur');
 
 var searchImgur = function (q, page, sort) {
@@ -32,28 +32,37 @@ router.get('/imgur/dunks', function (req, res) {
 });
 
 router.get('/youtube', function (req, res) {
+
     var q = req.param('q') || '';
     var count = Number(req.param('count'));
-    var youTube = new YouTube();
+    var apiKey = process.env.YOUTUBE_KEY || req.param('youtube_key') || '';
+    var youTube = new YouTube(apiKey);
+
     count = !isNaN(count) && (count > 0) ? count : 5;
-    youTube.setKey(process.env.YOUTUBE_KEY || req.param('youtube_key') || '');
-    youTube.search(q, count, function (resultData) {
-        res.send(resultData);
-    });
+
+    youTube.dunkSearch(q, count)
+        .always(function (resultData) {
+            res.send(resultData);
+        });
+
 });
 
 router.get('/youtube/dunks', function (req, res) {
-    var q = 'slam+dunk+basketball';
+
     var pageToken = req.param('page');
-    var count = Number(req.param('count'));
-    var youTube = new YouTube();
-    youTube.setKey(process.env.YOUTUBE_KEY || req.param('youtube_key') || '');
+    var count = Number(req.param('count')) || YouTube.COUNT;
+    var apiKey = process.env.YOUTUBE_KEY || req.param('youtube_key') || '';
+    var youTube = new YouTube(apiKey);
+
     if (pageToken && pageToken !== '0') {
         youTube.addParam('pageToken', pageToken);
     }
-    youTube.search(q, 50, function (resultData) {
-        res.send(resultData);
-    });
+
+    youTube.dunkSearch(YouTube.QUERY, count)
+        .always(function (resultData) {
+            res.send(resultData);
+        });
+
 });
 
 module.exports = router;

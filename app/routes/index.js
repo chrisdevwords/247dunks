@@ -3,31 +3,35 @@
 var express = require('express');
 var router  = express.Router();
 var Imgur = require('../lib/Imgur');
-var Youtube = require('youtube-node');
+var YouTube = require('../lib/DunkTube');
 
 var IMGUR_QUERY = 'dunk+ext%3Agif';
-var YOU_TUBE_QUERY = 'slam+dunk+basketball';
 
 /* GET home page */
 router.get('/', function (req, res) {
 
     var imgurData;
     var imgur = new Imgur(process.env.IMGUR_KEY || '');
-    var youtube = new Youtube();
+    var youtube = new YouTube(process.env.YOUTUBE_KEY || '');
 
-    imgur.search(IMGUR_QUERY, 'top', 0)
-        .always(function (resp) {
-            imgurData = resp.data;
-            youtube.setKey(process.env.YOUTUBE_KEY || '');
-            youtube.search(YOU_TUBE_QUERY, 50, function (resultData) {
-                res.render('index', {
-                    title : '247 Dunks!',
-                    imgur : imgurData,
-                    youtube : resultData,
-                    serverVars : true
-                });
-            });
+    var imgurReq = imgur.search(IMGUR_QUERY, 'top', 0)
+        .always(function (imgurResp) {
+            imgurData = imgurResp.data;
         });
+
+    var ytReq = imgurReq
+        .then(function () {
+            return youtube.dunkSearch(YouTube.QUERY, YouTube.COUNT);
+        });
+
+    ytReq.always(function (ytData) {
+        res.render('index', {
+            title : '247 Dunks!',
+            imgur : imgurData,
+            youtube : ytData,
+            serverVars : true
+        });
+    });
 });
 
 module.exports = router;
