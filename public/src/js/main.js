@@ -19,7 +19,7 @@ $(function () {
 
     app.view = new AppView({
         useVideo : useVideo,
-        medium : 'imgur',//useVideo ? 'youtube' : 'imgur',
+        medium : useVideo ? 'youtube' : 'imgur',
         imgur : imgur,
         youtube : youtube
     });

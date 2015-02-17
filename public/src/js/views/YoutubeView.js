@@ -9,6 +9,7 @@ var root = window || root || {};
 
 var YoutubeView = Backbone.View.extend({
 
+    logErrors : true,
     id : 'youtubeWrap',
     tagName : 'div',
     template : templates.youtubePlayer,
@@ -23,6 +24,7 @@ var YoutubeView = Backbone.View.extend({
     initialize : function () {},
 
     loadVideo : function () {
+        var _this = this;
         var model = this.model.toJSON();
         if (model.medium !== 'youtube') {
             return;
@@ -32,6 +34,7 @@ var YoutubeView = Backbone.View.extend({
                 player.loadVideoById(model.id);
             }).fail(function (err) {
                 console.error(err);
+                _this.$el.trigger('playerError', {medium : 'youtube', isFatal : true});
             });
         return this.delegateEvents();
     },
@@ -53,10 +56,15 @@ var YoutubeView = Backbone.View.extend({
             def.reject({message : 'flash player 10.1 not available'});
             return def.promise();
         }
-        url = 'http://www.youtube.com/apiplayer?enablejsapi=1&version=3&playerapiid=' + id;
+        url = '//www.youtube.com/apiplayer?enablejsapi=1&version=3&playerapiid=' + id;
         atts = {id : id};
         params = {allowScriptAccess : 'always'};
-        swfobject.embedSWF(url, id, '100%', '100%', '10.1', null, null, atts, params);
+        //todo error handler for player embed fail
+        swfobject.embedSWF(url, id, '100%', '100%', '10.1', null, null, params, atts, function (e) {
+            if (!e.success) {
+                def.reject(e);
+            }
+        });
         root.onYouTubePlayerReady = function (playerId) {
             _this.bindPlayer(playerId);
             def.resolve(_this.player);
@@ -74,13 +82,51 @@ var YoutubeView = Backbone.View.extend({
             console.log('state change', state);
             switch (state) {
                 case 0 :
+                    console.log('complete');
                     _this.$el.trigger('dunkComplete', _this.model.toJSON());
+                    break;
+                case 1 :
+                    console.log('playing');
+                    break;
+                case 2 :
+                    console.log('paused');
+                    break;
+                case 3 :
+                    console.log('buffering');
+                    break;
+                case 5 :
+                    console.log('cued');
+                    break;
+                case -1 :
+                    console.log('unstarted');
                     break;
             }
         };
 
         root.onYTError = function (code) {
-            console.error('youtube error', code);
+
+            var msg = 'youtube error';
+            var id = _this.model.get('id');
+
+            switch (code) {
+                case 2 :
+                    msg += ': invalid parameter';
+                    break;
+                case 100 :
+                    msg += ': video not found';
+                    break;
+                case 101:
+                case 150:
+                    msg += ': owner prohibits embedded player';
+                    break;
+            }
+
+            if (_this.logErrors) {
+                console.warn(msg);
+            }
+
+            _this.$el.trigger('playerError', {medium : 'youtube', msg : msg, id : id});
+
         };
 
         root.onYTApiChange = function () {

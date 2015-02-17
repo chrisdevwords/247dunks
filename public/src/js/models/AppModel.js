@@ -19,11 +19,9 @@ var AppModel = Backbone.Model.extend({
         }
     },
 
-    initialize : function (atts, options) {
+    initialize : function () {
 
-        this.options = options;
-
-        _.each(options.defaultData, function (data, medium) {
+        _.each(this.get('defaultData'), function (data, medium) {
             var col = this.get(medium);
             if (col) {
                 col.add(col.parse(data));
@@ -95,11 +93,7 @@ var AppModel = Backbone.Model.extend({
             if (!dunks.length) {
                 // if dunks api result is empty for this page
                 // clear the localStorage for the medium,
-                viewed.clearMedium(medium);
-                // reset the page number to 0,
-                pages.floor(medium);
-                // set dunks to default from options
-                dunks.set(_this.options.defaultData[medium])
+                _this.resetMedium(medium);
             }
             return _this.curate(medium);
         });
@@ -126,6 +120,17 @@ var AppModel = Backbone.Model.extend({
             });
         }
         return def.promise();
+    },
+
+    resetMedium : function (medium) {
+        var dunks = this.get(medium);
+        if (!dunks) {
+            return
+        }
+        this.get('viewed').clearMedium(medium);
+        this.get('pages').floor(medium);
+        dunks.set(dunks.parse(_this.get('defaultData')[medium]));
+
     }
 });
 

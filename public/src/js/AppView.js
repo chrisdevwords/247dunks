@@ -14,14 +14,16 @@ module.exports = Backbone.View.extend({
         'click .new-dunk-btn' : 'onNewDunkClick',
         'click .dunk-gif'     : 'onNewDunkClick',
         'click #dunkVideo'    : 'onNewDunkClick',
-        'dunkComplete'        : 'onDunkComplete'
+        'dunkComplete'        : 'onDunkComplete',
+        'playerError'         : 'onPlayerError'
     },
 
     initialize : function (options) {
 
         var _this = this;
 
-        this.model = new AppModel({medium : options.medium}, {
+        this.model = new AppModel({
+            medium : options.medium,
             defaultData : {
                 imgur : options.imgur,
                 youtube : options.youtube
@@ -55,6 +57,18 @@ module.exports = Backbone.View.extend({
         var dunk = this.dunkView.model;
         this.model.dunkViewed(dunk.get('id'), dunk.get('medium'));
         this.newDunk();
+    },
+
+    onPlayerError : function (event, error) {
+
+        if (error.isFatal) {
+            console.log('switch media if possible else just show static');
+            //show static
+        } else {
+            this.model.dunkViewed(error.id, error.medium);
+            this.newDunk();
+        }
+
     },
 
     newDunk : function () {
