@@ -27,10 +27,11 @@ module.exports = Backbone.View.extend({
             defaultData : {
                 imgur : options.imgur,
                 youtube : options.youtube
-            }
+            },
+            availableMedia : options.useVideo && options.hasFlash ? ['imgur', 'youtube'] : ['imgur']
         });
 
-        this.dunkView = new DunkView(options);
+        this.dunkView = new DunkView(_.extend({model : this.model}, options));
         this.dunkView.render();
 
         this.controls = new Controls(options);
@@ -46,6 +47,7 @@ module.exports = Backbone.View.extend({
             _this.$el.toggleClass('full-screen');
         });
 
+        this.model.on('change:medium', this.newDunk, this);
     },
 
     onDunkComplete : function (event, dunk) {
@@ -54,7 +56,7 @@ module.exports = Backbone.View.extend({
     },
 
     onNewDunkClick : function (event) {
-        var dunk = this.dunkView.model;
+        var dunk = this.model.get('currentDunk');
         this.model.dunkViewed(dunk.get('id'), dunk.get('medium'));
         this.newDunk();
     },
@@ -77,7 +79,9 @@ module.exports = Backbone.View.extend({
 
         this.model.nextDunk()
             .done(function (dunk) {
-                _this.dunkView.model.set(dunk.toJSON());
+                // current dunk should reside in the model, not dunkView.model --- dunkView.model should have the same model as this view
+                // maybe the player views retain their models...
+                _this.model.get('currentDunk').set(dunk.toJSON());//dunkView.model.set(dunk.toJSON());
             })
             .fail(function (err) {
                 console.log(err);

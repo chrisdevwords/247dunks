@@ -3,6 +3,7 @@
 var root = window || global;
 var $ = require('jquery');
 var Backbone = require('backbone');
+var swfobject = require('swfobject');
 
 Backbone.$ = root.jQuery = root.$ = $;
 Backbone.LocalStorage = require('backbone.localstorage');
@@ -16,10 +17,12 @@ $(function () {
     var imgur = JSON.parse(SV.imgur || '{}');
     var youtube = SV.youtube || {};
     var useVideo = $('html').hasClass('no-touch');
+    var hasFlash = swfobject.hasFlashPlayerVersion('10.1');
 
     app.view = new AppView({
         useVideo : useVideo,
-        medium : useVideo ? 'youtube' : 'imgur',
+        hasFlash : hasFlash,
+        medium : hasFlash ? 'youtube' : 'imgur',
         imgur : imgur,
         youtube : youtube
     });

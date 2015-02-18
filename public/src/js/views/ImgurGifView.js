@@ -21,7 +21,7 @@ var ImgurGifView = Backbone.View.extend({
     },
 
     renderContent : function () {
-        this.$el.html(this.template(this.model.toJSON()));
+        this.$el.html(this.template(this.model.toJSON().currentDunk));
         return this.delegateEvents();
     }
 

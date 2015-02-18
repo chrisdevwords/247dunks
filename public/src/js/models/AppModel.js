@@ -6,6 +6,7 @@ var Backbone = require('backbone');
 var ViewedDunks = require('../collections/ViewedDunks');
 var Dunks = require('../collections/Dunks');
 var Settings = require('../collections/Settings');
+var DunkModel = require('./DunkModel');
 
 var AppModel = Backbone.Model.extend({
 
@@ -15,7 +16,8 @@ var AppModel = Backbone.Model.extend({
             pages : new Settings.Pages,
             imgur : new Dunks.Imgur,
             youtube : new Dunks.Youtube,
-            viewed : new ViewedDunks
+            viewed : new ViewedDunks,
+            currentDunk : new DunkModel.Dunk
         }
     },
 

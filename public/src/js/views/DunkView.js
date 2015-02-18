@@ -18,12 +18,14 @@ var DunkView = Backbone.View.extend({
 
     initialize : function (options) {
 
-        this.model = new DunkModel.Dunk({medium : options.medium});
+        //this.model = new DunkModel.Dunk({medium : options.medium});
         options = _.extend(options, {model : this.model});
 
         if (options.useVideo) {
+            if (options.hasFlash) {
+                this.mediaViews.youtube = new YoutubeView(options);
+            }
             this.mediaViews.imgur = new ImgurVideoView(options);
-            this.mediaViews.youtube = new YoutubeView(options)
         } else {
             this.mediaViews.imgur = new ImgurGifView(options);
         }
@@ -53,7 +55,7 @@ var DunkView = Backbone.View.extend({
             this.currentView = mediumView;
             this.$el.find('.content-wrap').append(this.currentView.render().$el);
         }
-        return this;
+        return this.delegateEvents();
     },
 
     render : function () {

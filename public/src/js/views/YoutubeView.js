@@ -25,13 +25,13 @@ var YoutubeView = Backbone.View.extend({
 
     loadVideo : function () {
         var _this = this;
-        var model = this.model.toJSON();
-        if (model.medium !== 'youtube') {
+        var dunk = this.model.get('currentDunk').toJSON();
+        if (dunk.medium !== 'youtube') {
             return;
         }
         this.loadSWFObject()
             .done(function (player) {
-                player.loadVideoById(model.id);
+                player.loadVideoById(dunk.id);
             }).fail(function (err) {
                 console.error(err);
                 _this.$el.trigger('playerError', {medium : 'youtube', isFatal : true});
@@ -77,13 +77,14 @@ var YoutubeView = Backbone.View.extend({
 
         var _this = this;
         var player = document.getElementById(playerId);
+        var dunk = _this.model.get('currentDunk');
 
         root.onYTStateChange = function (state) {
             console.log('state change', state);
             switch (state) {
                 case 0 :
                     console.log('complete');
-                    _this.$el.trigger('dunkComplete', _this.model.toJSON());
+                    _this.$el.trigger('dunkComplete', dunk.toJSON());
                     break;
                 case 1 :
                     console.log('playing');
@@ -106,7 +107,7 @@ var YoutubeView = Backbone.View.extend({
         root.onYTError = function (code) {
 
             var msg = 'youtube error';
-            var id = _this.model.get('id');
+            var id = _this.model.get('currentDunk').get('id');
 
             switch (code) {
                 case 2 :
@@ -141,6 +142,7 @@ var YoutubeView = Backbone.View.extend({
     },
 
     remove : function () {
+        this.model.get('currentDunk').off('change:id', this.loadVideo, this);
         if (this.player) {
             _.each(this.ytEvents, function (listener, event) {
                 this.player.removeEventListener(event, listener);
@@ -154,7 +156,7 @@ var YoutubeView = Backbone.View.extend({
 
     render : function () {
         YoutubeView.__super__.render.call(this);
-        this.model.bind('change:id', this.loadVideo, this);
+        this.model.get('currentDunk').on('change:id', this.loadVideo, this);
         this.$el.html(this.template());
         return this;
     }
